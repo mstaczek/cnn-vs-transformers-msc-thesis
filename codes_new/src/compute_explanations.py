@@ -3,7 +3,7 @@ from tqdm import tqdm
 import os
 
 def compute_explanations(dataset_name: str, model_name: str, explanation_name: str, root_images=None, 
-                         root_explanations=None, number_of_batches_to_process = None, **kwargs):
+                         root_explanations=None, number_of_batches_to_process=None, **kwargs):
     """
         defaults paths to '../datasets/imagenette2/train' and '../explanations'
     """
