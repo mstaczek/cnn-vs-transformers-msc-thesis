@@ -7,6 +7,7 @@ class Explanation:
         self.model_name = None
 
     def compute_explanation(self, model: Model, images: torch.Tensor) -> torch.Tensor:
+        model.make_sure_is_initialized()
         self._update_model_name(model)
         return self._compute_explanation(model, images)
 
