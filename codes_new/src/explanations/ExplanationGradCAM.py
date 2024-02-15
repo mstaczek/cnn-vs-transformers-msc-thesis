@@ -12,5 +12,5 @@ class ExplanationGradCAM(Explanation):
         return explanations
 
     def _update_explanation_method(self, model: Model):        
-        self.gradcam_explanation_method = GradCAM(model=model.model, **model.explanation_parameters_gradcam)
+        self.gradcam_explanation_method = GradCAM(model=model.get_model(), **model.explanation_parameters_gradcam)
         
