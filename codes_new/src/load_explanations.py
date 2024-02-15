@@ -55,6 +55,8 @@ def load_explanations_of_many_models(dataset_name: str, model_names: list[str], 
         filtered_loaded_data = _filter_loaded_data_by_image_paths(loaded_data, paths_list_filtered)
         filtered_loaded_data_list.append(filtered_loaded_data)
 
+    print(f'Loaded {len(paths_list_filtered)} common explanations for each model.')
+
     return filtered_loaded_data_list
 
 def _get_paths_common_to_all_models(loaded_data_list: list[dict]):
@@ -69,7 +71,7 @@ def _get_paths_common_to_all_models(loaded_data_list: list[dict]):
     paths_list_filtered = [path[0] for path in paths_list_filtered]
     return paths_list_filtered
 
-def _filter_loaded_data_by_image_paths(loaded_data: dict, paths_to_leave_list: list[str]):
+def _filter_loaded_data_by_image_paths(loaded_data: dict, paths_to_leave_list: list[str]) -> dict:
     indices_to_leave = [i for i, path in enumerate(loaded_data['paths']) if _trim_image_path(path) in paths_to_leave_list]
     filtered_loaded_data = {'explanations': loaded_data['explanations'][indices_to_leave], 
                             'paths': [loaded_data['paths'][i] for i in indices_to_leave], 
