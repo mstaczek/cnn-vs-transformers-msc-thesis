@@ -51,9 +51,12 @@ class DatasetManager:
             output_dir = os.path.join(path_to_explanations, real_class_name)
             image_name = os.path.basename(path_to_image)
             image_name_without_extension = os.path.splitext(image_name)[0]
-            output_path = os.path.join(output_dir, image_name_without_extension + '.npy')
+            output_path_npy = os.path.join(output_dir, image_name_without_extension + '.npy')
+            output_path_img = os.path.join(output_dir, image_name_without_extension + '.png')
             os.makedirs(output_dir, exist_ok=True)
-            np.save(output_path, explanation)
+
+            np.save(output_path_npy, explanation)
+            explanation_method.save(path_to_image, output_path_img, explanation)
     
     def get_explanations_dataloader(self, model: Model, explanation_method: Explanation, **kwargs) -> DataLoader:
         path_to_explanations = self._get_explanations_root(model, explanation_method)

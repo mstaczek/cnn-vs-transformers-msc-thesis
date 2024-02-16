@@ -21,3 +21,6 @@ class Explanation:
     
     def _compute_explanation(self, model: Model, images: torch.Tensor) -> torch.Tensor:
         raise NotImplementedError
+    
+    def save(self, path_image: str, path_explanation: str, explanation: torch.Tensor):
+        raise NotImplementedError
