@@ -19,6 +19,6 @@ class ViT_B_32(Model):
 
     def _gradcam_reshape_transform(self, tensor, height=7, width=7): # ViT-B/32 has tensor size BATCH x 50 x 768 at this layer
         result = tensor[:, 1:, :] # remove class token
-        result = result.reshape(tensor.size(0), height, width, tensor.size(2))
+        result = result.reshape(result.size(0), height, width, result.size(2))
         result = result.transpose(2, 3).transpose(1, 2)
         return result
