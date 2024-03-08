@@ -1,14 +1,16 @@
 from src.models.Model import Model
 import torch
-from torchvision.models import vit_b_32, ViT_B_32_Weights
+import timm
 
 class ViT_B_32(Model):
     def __init__(self):
         super().__init__("ViT_B_32")
 
     def _build_model(self) -> torch.nn.Module:
-        return vit_b_32(weights=ViT_B_32_Weights.IMAGENET1K_V1)
-    
+        model = timm.create_model('vit_base_patch32_224.sam_in1k', pretrained=True)
+        print(f"Loaded model: https://huggingface.co/{model.default_cfg['hf_hub_id']}")
+        return model
+
     def make_sure_is_initialized(self):
         if self.is_initialized is False:
             self.model = self._build_model()

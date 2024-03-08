@@ -1,13 +1,15 @@
 from src.models.Model import Model
 import torch
-from torchvision.models import swin_t, Swin_T_Weights
+import timm
 
 class Swin_T(Model):
     def __init__(self):
         super().__init__("Swin_T")
 
     def _build_model(self) -> torch.nn.Module:
-        return swin_t(weights=Swin_T_Weights.IMAGENET1K_V1)
+        model = timm.create_model('swin_tiny_patch4_window7_224', pretrained=True)
+        print(f"Loaded model: https://huggingface.co/{model.default_cfg['hf_hub_id']}")
+        return model
     
     def make_sure_is_initialized(self):
         if self.is_initialized is False:

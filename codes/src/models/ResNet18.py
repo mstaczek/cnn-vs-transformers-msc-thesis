@@ -1,13 +1,15 @@
 from src.models.Model import Model
 import torch
-from torchvision.models import resnet18, ResNet18_Weights
+import timm
 
 class ResNet18(Model):
     def __init__(self):
         super().__init__("ResNet18")
 
     def _build_model(self) -> torch.nn.Module:
-        return resnet18(weights=ResNet18_Weights.IMAGENET1K_V1)
+        model = timm.create_model('resnet18d', pretrained=True)
+        print(f"Loaded model: https://huggingface.co/{model.default_cfg['hf_hub_id']}")
+        return model
     
     def make_sure_is_initialized(self):
         if self.is_initialized is False:
@@ -15,3 +17,4 @@ class ResNet18(Model):
             self.explanation_parameters_gradcam = {
                 'target_layers': [self.model.layer4[-1]], # resulting size is 7 x 7
             }
+            self.is_initialized = True

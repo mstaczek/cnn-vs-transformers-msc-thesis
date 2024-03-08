@@ -1,13 +1,15 @@
 from src.models.Model import Model
 import torch
-from torchvision.models import resnet50, ResNet50_Weights
+import timm
 
 class ResNet50(Model):
     def __init__(self):
         super().__init__("ResNet50")
 
     def _build_model(self) -> torch.nn.Module:
-        return resnet50(weights=ResNet50_Weights.IMAGENET1K_V2)
+        model = timm.create_model('resnet18d', pretrained=True)
+        print(f"Loaded model: https://huggingface.co/{model.default_cfg['hf_hub_id']}")
+        return model
     
     def make_sure_is_initialized(self):
         if self.is_initialized is False:
