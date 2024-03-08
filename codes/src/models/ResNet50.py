@@ -7,7 +7,7 @@ class ResNet50(Model):
         super().__init__("ResNet50")
 
     def _build_model(self) -> torch.nn.Module:
-        model = timm.create_model('resnet18d', pretrained=True)
+        model = timm.create_model('resnet50d', pretrained=True)
         print(f"Loaded model: https://huggingface.co/{model.default_cfg['hf_hub_id']}")
         return model
     
@@ -17,3 +17,4 @@ class ResNet50(Model):
             self.explanation_parameters_gradcam = {
                 'target_layers': [self.model.layer4[-1]], # resulting size is 7 x 7
             }
+            self.is_initialized = True
