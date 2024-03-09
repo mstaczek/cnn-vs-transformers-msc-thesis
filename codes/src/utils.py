@@ -1,5 +1,8 @@
 from src.strings_to_classes_mappings import datasets_mapping, models_mapping, explanations_mapping
 import os
+import torch
+import numpy as np
+import random
 
 def create_classes_from_strings(model_name: str, dataset_name: str, explanation_name: str, root_images=None, root_explanations=None):
     if root_images is None:
@@ -22,3 +25,8 @@ def assert_class_names_are_defined(dataset_name=None, model_name=None, explanati
         assert model_name in models_mapping, f"Model name {model_name} not found in models_mapping, available models: {models_mapping}"
     if explanation_name is not None:
         assert explanation_name in explanations_mapping, f"Explanation name {explanation_name} not found in explanations_mapping, available explanations: {explanations_mapping}"
+
+def set_seed(seed: int = 912723012):
+    torch.manual_seed(seed)
+    np.random.seed(seed)
+    random.seed(seed)
