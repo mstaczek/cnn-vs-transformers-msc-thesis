@@ -1,7 +1,7 @@
 from torch.utils.data import DataLoader
 import torch
-from src.models.Model import Model
-from src.explanations.Explanation import Explanation
+from src.models import Model
+from src.explanations import Explanation
 import os
 import numpy as np
 from torchvision.datasets import DatasetFolder, ImageFolder

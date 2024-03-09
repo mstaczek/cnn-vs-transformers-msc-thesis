@@ -1,5 +1,5 @@
-from src.explanations.Explanation import Explanation
-from src.models.Model import Model
+from src.explanations import Explanation
+from src.models import Model
 import torch
 from captum.attr import KernelShap
 from skimage import segmentation

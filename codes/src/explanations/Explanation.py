@@ -1,4 +1,4 @@
-from src.models.Model import Model
+from src.models import Model
 import torch
 
 class Explanation:

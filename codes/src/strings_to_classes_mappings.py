@@ -1,4 +1,4 @@
-from src.datasets.Imagenette2Manager import Imagenette2Manager
+from src.datasets import Imagenette2Manager
 from src.models import ResNet18, ResNet50, ViT_B_32, Swin_T
 from src.explanations import ExplanationGradCAM, ExplanationKernelSHAP
 
