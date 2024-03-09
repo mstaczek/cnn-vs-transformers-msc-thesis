@@ -20,6 +20,7 @@ class Explanation:
         raise NotImplementedError
     
     def _compute_explanation(self, model: Model, images: torch.Tensor) -> torch.Tensor:
+        # return size Batch x H x W
         raise NotImplementedError
     
     def save(self, path_image: str, path_explanation: str, explanation: torch.Tensor):
