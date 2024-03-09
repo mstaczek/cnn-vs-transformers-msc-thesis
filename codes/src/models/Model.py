@@ -16,3 +16,6 @@ class Model:
         if self.model is None:
             self.model = self._build_model()
         return self.model
+    
+    def __call__(self, *args: torch.Any, **kwds: torch.Any) -> torch.Any:
+        return self.get_model()(*args, **kwds)
