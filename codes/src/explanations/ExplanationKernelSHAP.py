@@ -25,7 +25,7 @@ class ExplanationKernelSHAP(Explanation):
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
             attributions = self.kernel_shap_explanation_method.attribute(images, target=targets, baselines=baselines, n_samples=self.N_SAMPLES, feature_mask=feature_masks)
-        results = attributions.cpu().detach().numpy().sum(axis=1) * -1
+        results = attributions.cpu().detach().numpy().sum(axis=1)
         explanations = (results - np.min(results)) / (np.max(results) - np.min(results))
         return explanations
 
