@@ -3,12 +3,12 @@ from tqdm import tqdm
 
 
 def compute_explanations(dataset_name: str, model_name: str, explanation_name: str, root_images=None, 
-                         root_explanations=None, number_of_batches_to_process=None, **kwargs):
+                         root_explanations=None, number_of_batches_to_process=None, device='cpu', **kwargs):
     """
         defaults paths to '../datasets/imagenette2/train' and '../explanations'
     """
 
-    dataset_manager, model, explanation = create_classes_from_strings(model_name, dataset_name, explanation_name, root_images, root_explanations)
+    dataset_manager, model, explanation = create_classes_from_strings(model_name, dataset_name, explanation_name, root_images, root_explanations, device)
 
     dataloader = dataset_manager.get_dataloader(**kwargs)
 
@@ -17,6 +17,8 @@ def compute_explanations(dataset_name: str, model_name: str, explanation_name: s
         number_of_batches_to_process = len(dataloader)
     number_of_batches_to_process = min(number_of_batches_to_process, len(dataloader))
     images_to_process_limit = min(len(dataloader.dataset), number_of_batches_to_process * dataloader.batch_size)
+   
+    model.make_sure_is_initialized()
 
     pbar = tqdm(dataloader, desc='Computing explanations for batches', total=number_of_batches_to_process)
    

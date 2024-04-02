@@ -17,5 +17,8 @@ class Model:
             self.model = self._build_model()
         return self.model
     
+    def move_to_device(self, device: str):
+        self.model.to(device)
+    
     def __call__(self, *args: torch.Any, **kwds: torch.Any) -> torch.Any:
         return self.get_model()(*args, **kwds)

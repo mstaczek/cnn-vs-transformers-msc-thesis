@@ -12,11 +12,11 @@ class ExplanationKernelSHAP(Explanation):
     N_SEGMENTS = 64
     N_SAMPLES = 100
 
-    def __init__(self):
-        super().__init__("KernelSHAP")
+    def __init__(self, device: str = 'cpu'):
+        super().__init__("KernelSHAP", device)
 
     def _compute_explanation(self, model: Model, images: torch.Tensor) -> torch.Tensor:
-        targets = model(images).max(1).indices
+        targets = model(images.to(self.device)).max(1).indices
         baselines = torch.zeros_like(images)
         feature_masks = torch.Tensor(np.array([
             segmentation.slic(input_tensor.clone().detach().cpu().numpy().squeeze().transpose((1, 2, 0)), n_segments=self.N_SEGMENTS, start_label=0)
@@ -24,7 +24,9 @@ class ExplanationKernelSHAP(Explanation):
         ])).int()
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
-            attributions = self.kernel_shap_explanation_method.attribute(images, target=targets, baselines=baselines, n_samples=self.N_SAMPLES, feature_mask=feature_masks)
+            attributions = self.kernel_shap_explanation_method.attribute(images.to(self.device), target=targets, 
+                                                                         baselines=baselines.to(self.device), n_samples=self.N_SAMPLES, 
+                                                                         feature_mask=feature_masks.to(self.device))
         results = attributions.cpu().detach().numpy().sum(axis=1)
         explanations = (results - np.min(results)) / (np.max(results) - np.min(results))
         return explanations
