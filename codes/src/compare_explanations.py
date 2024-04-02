@@ -1,5 +1,6 @@
 import pandas as pd
 import torch.nn.functional as F
+from torch import exp
 
 
 def compare_explanations(explanations_list: list[dict], comparison_function):
@@ -32,3 +33,14 @@ def cosine_similarity(explanations_1, explanations_2):
     explanations_2_flattened = explanations_2.flatten(start_dim=1)
     cosine_similarities = F.cosine_similarity(explanations_1_flattened, explanations_2_flattened, dim=1)
     return cosine_similarities.mean().item()
+
+def radial_basis_function(explanations_1, explanations_2, sigma=10):
+    """
+        in: explanations_1, explanations_2 - torch.tensors of same dimensions, each row is an explanation
+        out: radial basis function similarity of explanations_1 and explanations_2
+    """
+    explanations_1_flattened = explanations_1.flatten(start_dim=1)
+    explanations_2_flattened = explanations_2.flatten(start_dim=1)
+    squared_distances = (explanations_1_flattened - explanations_2_flattened).pow(2).sum(dim=1)
+    rbf_similarities = exp(-0.5 * squared_distances / sigma**2)
+    return rbf_similarities.mean().item()
