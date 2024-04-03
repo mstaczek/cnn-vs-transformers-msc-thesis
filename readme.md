@@ -4,4 +4,8 @@
 
 **Title:** Comparison of convolutional neural networks and transformer architectures for image classification using explanation methods
 
+**Author:** Mateusz Stączek
+
+**Supervisor:** Elżbieta Sienkiewicz, PhD
+
 # WIP
