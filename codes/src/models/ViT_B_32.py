@@ -15,7 +15,7 @@ class ViT_B_32(Model):
         if self.is_initialized is False:
             self.model = self._build_model()
             self.explanation_parameters_gradcam = {
-                'target_layers': [self.model.blocks[-1]], # last ViT Encoder Block
+                'target_layers': [self.model.blocks[-2]], # one but last ViT Encoder Block
                 'reshape_transform' : self._gradcam_reshape_transform
             }
             self.is_initialized = True
