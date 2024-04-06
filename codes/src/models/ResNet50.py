@@ -7,7 +7,7 @@ class ResNet50(Model):
         super().__init__("ResNet50")
 
     def _build_model(self) -> torch.nn.Module:
-        model = timm.create_model('resnet50d', pretrained=True)
+        model = timm.create_model('resnet50d.ra2_in1k', pretrained=True)
         print(f"Loaded model: https://huggingface.co/{model.default_cfg['hf_hub_id']}")
         return model
     

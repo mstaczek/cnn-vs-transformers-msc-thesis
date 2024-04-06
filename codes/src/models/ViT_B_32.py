@@ -7,7 +7,7 @@ class ViT_B_32(Model):
         super().__init__("ViT_B_32")
 
     def _build_model(self) -> torch.nn.Module:
-        model = timm.create_model('vit_base_patch32_224', pretrained=True)
+        model = timm.create_model('vit_base_patch32_224.augreg_in21k_ft_in1k', pretrained=True)
         print(f"Loaded model: https://huggingface.co/{model.default_cfg['hf_hub_id']}")
         return model
 

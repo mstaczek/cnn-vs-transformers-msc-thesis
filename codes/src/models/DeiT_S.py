@@ -7,7 +7,7 @@ class DeiT_S(Model):
         super().__init__("DeiT_S")
 
     def _build_model(self) -> torch.nn.Module:
-        model = timm.create_model('deit_small_patch16_224', pretrained=True)
+        model = timm.create_model('deit_small_patch16_224.fb_in1k', pretrained=True)
         print(f"Loaded model: https://huggingface.co/{model.default_cfg['hf_hub_id']}")
         return model
     
