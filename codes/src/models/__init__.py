@@ -6,6 +6,7 @@ from .ResNeXt50 import ResNeXt50
 from .Res2Net50 import Res2Net50
 from .DenseNet121 import DenseNet121
 from .MobileNetV3 import MobileNetV3
+from .ConvNeXtV2_Nano import ConvNeXtV2_Nano
 from .ViT_B_32 import ViT_B_32
 from .Swin_T import Swin_T
 from .DeiT_S import DeiT_S
