@@ -9,6 +9,7 @@ datasets_mapping = {
 models_mapping = {
     'DeiT_S'          : DeiT_S,
     'DeiT_T'          : DeiT_T,
+    'DenseNet121'     : DenseNet121,
     'EfficientNet_B3' : EfficientNet_B3,
     'EfficientNet_B4' : EfficientNet_B4,
     'Swin_T'          : Swin_T,
