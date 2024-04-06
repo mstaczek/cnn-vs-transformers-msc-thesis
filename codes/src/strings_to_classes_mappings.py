@@ -15,6 +15,7 @@ models_mapping = {
     'ResNet18'        : ResNet18,
     'ResNet50'        : ResNet50,
     'ResNeXt50'       : ResNeXt50,
+    'Res2Net50'       : Res2Net50,
     'ViT_B_32'        : ViT_B_32,
 }
 
