@@ -13,10 +13,7 @@ def compare_explanations(explanations_list: list[dict], comparison_function):
 
     for i in range(len(explanations_list)):
         for j in range(i, len(explanations_list)):
-            if i == j:
-                similarity_ij = 1
-            else:
-                similarity_ij = comparison_function(explanations_list[i]['explanations'], explanations_list[j]['explanations'])
+            similarity_ij = comparison_function(explanations_list[i]['explanations'], explanations_list[j]['explanations'])
             model_i = explanations_list[i]['model_name']
             model_j = explanations_list[j]['model_name']
             similarity_df.loc[model_i, model_j] = similarity_ij
