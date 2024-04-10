@@ -8,4 +8,12 @@
 
 **Supervisor:** Elżbieta Sienkiewicz, PhD
 
+## Codes
+
+[codes](https://github.com/mstaczek/cnn-vs-transformers-msc-thesis/tree/main/codes) directory contains both implementation of the analysis pipeline as well as its usage.
+
+## Results
+
+Go to the [results](https://github.com/mstaczek/cnn-vs-transformers-msc-thesis/tree/main/results) directory to read about various experiments and their results.
+
 # WIP
