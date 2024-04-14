@@ -47,7 +47,6 @@ Good - some CNN (EfficientNet_B3) | Bad - EfficientNet_B4 (CNN)
 :-------------------------:|:-------------------------:
 ![](20240410-gradcam-1024/good_EfficientNet_B3.png)  |  ![](20240410-gradcam-1024/bad_EfficientNet_B4.png)
 
-
 ## 20240410-kernelshap-64
 
 Settings:
@@ -73,3 +72,27 @@ Note: Explanations generally look bland. Possibly, changing KernelSHAP settings 
 Good explanation | Bad explanation
 :-------------------------:|:-------------------------:
 ![](20240410-kernelshap-64/good_DeiT_S.png)  |  ![](20240410-kernelshap-64/bad_ResNeXt50.png)
+
+## 20240414-1-2x2-pca-comparison
+
+Take PCA plots from `20240410-gradcam-1024` and `20240410-kernelshap-64` for cosine and RBF similarity and plot them side by side:
+
+![](20240414-1-2x2-pca-comparison/pca_gradcam_kernelshap_comparison.png)
+
+## 20240414-2-gradcam-1024-fixed-efficientnet-b4
+
+Settings - rerun `20240410-gradcam-1024` for EfficientNet_B4 only after fix.
+
+Fix: replace top-right corner with an average of other pixels.
+
+Results: extreme value from top-right corner has been removed for all explanations -> 
+
+Before fix | After fix
+:-------------------------:|:-------------------------:
+![](20240410-gradcam-1024/bad_EfficientNet_B4.png) | ![](20240414-2-gradcam-1024-fixed-efficientnet-b4/fixed_EfficientNet_B4.png)
+
+## 20240414-3-2x2-pca-comparison-fixed-efficientnet-b4
+
+Goal: repeat `20240414-1-2x2-pca-comparison` with fixed EfficientNet_B4.
+
+![](20240414-3-2x2-pca-comparison-fixed-efficientnet-b4/pca_gradcam_kernelshap_comparison.png)
