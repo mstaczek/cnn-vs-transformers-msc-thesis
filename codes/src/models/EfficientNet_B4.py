@@ -16,5 +16,11 @@ class EfficientNet_B4(Model):
             self.model = self._build_model()
             self.explanation_parameters_gradcam = {
                 'target_layers': [self.model.conv_head], # resulting size is 7 x 7
+                'reshape_transform' : self._gradcam_fix_transform
             }
             self.is_initialized = True
+
+    def _gradcam_fix_transform(self, tensor): # remove top-right corner with average
+        result = tensor
+        result[:,:,0,6] = (torch.sum(result, dim=[2,3]) - result[:,:,0,6]) / (result.size(2) * result.size(3) - 1)
+        return result
