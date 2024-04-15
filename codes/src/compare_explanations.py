@@ -15,8 +15,6 @@ def compare_explanations(explanations_list: list[dict], comparison_function, com
         for j in range(i, len(explanations_list)):
             if compare_only_explanations_with_same_predictions and sum(explanations_list[i]['predictions'] != explanations_list[j]['predictions']) != 0:
                 indices_of_matching_prediction = explanations_list[i]['predictions'] == explanations_list[j]['predictions']
-                print(explanations_list[i]['predictions'])
-                print(explanations_list[j]['predictions'])
                 explanations_i = explanations_list[i]['explanations'][indices_of_matching_prediction]
                 explanations_j = explanations_list[j]['explanations'][indices_of_matching_prediction]
             else:
