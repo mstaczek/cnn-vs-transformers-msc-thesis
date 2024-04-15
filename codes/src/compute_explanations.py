@@ -28,7 +28,6 @@ def compute_explanations(dataset_name: str, model_name: str, explanation_name: s
             break
         
         explanations, predicted_labels = explanation.compute_explanation(model, images)
-        # predicted_labels = model(images).cpu().detach().numpy().argmax(axis=1).tolist()
         dataset_manager.save_explanations(model, explanation, explanations, paths, predicted_labels)
 
         processed_images += len(images)

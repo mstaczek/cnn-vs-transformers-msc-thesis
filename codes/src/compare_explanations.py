@@ -3,9 +3,9 @@ import torch.nn.functional as F
 from torch import exp
 
 
-def compare_explanations(explanations_list: list[dict], comparison_function):
+def compare_explanations(explanations_list: list[dict], comparison_function, compare_only_explanations_with_same_predictions=False):
     """
-        in: list of dictionaries with keys 'explanations', 'paths', 'labels', 'model_name', 'explanation_name'
+        in: list of dictionaries with keys 'explanations', 'paths', 'labels', 'model_name', 'explanation_name', 'predictions'
         out: dataframe models x models with comparison_function applied to each pair of model explanations
     """
     models = [data['model_name'] for data in explanations_list]
@@ -13,7 +13,20 @@ def compare_explanations(explanations_list: list[dict], comparison_function):
 
     for i in range(len(explanations_list)):
         for j in range(i, len(explanations_list)):
-            similarity_ij = comparison_function(explanations_list[i]['explanations'], explanations_list[j]['explanations'])
+            if compare_only_explanations_with_same_predictions and sum(explanations_list[i]['predictions'] != explanations_list[j]['predictions']) != 0:
+                indices_of_matching_prediction = explanations_list[i]['predictions'] == explanations_list[j]['predictions']
+                print(explanations_list[i]['predictions'])
+                print(explanations_list[j]['predictions'])
+                explanations_i = explanations_list[i]['explanations'][indices_of_matching_prediction]
+                explanations_j = explanations_list[j]['explanations'][indices_of_matching_prediction]
+            else:
+                explanations_i = explanations_list[i]['explanations']
+                explanations_j = explanations_list[j]['explanations']
+            
+            if len(explanations_i) == 0 or len(explanations_j) == 0:
+                similarity_ij = 0
+            else:
+                similarity_ij = comparison_function(explanations_i, explanations_j)
             model_i = explanations_list[i]['model_name']
             model_j = explanations_list[j]['model_name']
             similarity_df.loc[model_i, model_j] = similarity_ij
@@ -41,3 +54,21 @@ def radial_basis_function(explanations_1, explanations_2, sigma=10):
     squared_distances = (explanations_1_flattened - explanations_2_flattened).pow(2).sum(dim=1)
     rbf_similarities = exp(-0.5 * squared_distances / sigma**2)
     return rbf_similarities.mean().item()
+
+def count_same_predictions(explanations_list: list[dict]):
+    """
+        in: list of dictionaries with keys 'explanations', 'paths', 'labels', 'model_name', 'explanation_name', 'predictions'
+        out: dataframe models x models with count of same predictions
+    """
+    models = [data['model_name'] for data in explanations_list]
+    count_of_same_predictions_df = pd.DataFrame(index=models, columns=models)
+
+    for i in range(len(explanations_list)):
+        for j in range(i, len(explanations_list)):
+            count_of_same_predictions = sum(explanations_list[i]['predictions'] == explanations_list[j]['predictions']).item()
+            model_i = explanations_list[i]['model_name']
+            model_j = explanations_list[j]['model_name']
+            count_of_same_predictions_df.loc[model_i, model_j] = count_of_same_predictions
+            count_of_same_predictions_df.loc[model_j, model_i] = count_of_same_predictions
+    
+    return count_of_same_predictions_df
