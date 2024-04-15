@@ -18,18 +18,22 @@ def load_explanations(dataset_name: str, model_name: str, explanation_name: str,
     explanations = []
     paths = []
     labels = []
+    predictions = []
 
-    for explanations_batch, labels_batch, paths_batch in tqdm(dataloader_explanations, desc='Loading explanations'):
+    for explanations_batch, labels_batch, model_predictions_batch, paths_batch in tqdm(dataloader_explanations, desc='Loading explanations'):
         explanations.append(explanations_batch)
         paths.append(paths_batch)
-        labels.append(labels_batch)
+        labels.append(labels_batch) 
+        predictions.append(model_predictions_batch)
 
     explanations = torch.cat(explanations, dim=0)
     paths = [item for sublist in paths for item in sublist]
     labels = torch.cat(labels, dim=0)
+    predictions = torch.cat(predictions, dim=0)
     
     loaded_explanations = {'explanations': explanations, 'paths': paths, 'labels': labels, 
-                           'model_name': model.name, 'explanation_name': explanation_method.name}
+                           'model_name': model.name, 'explanation_name': explanation_method.name,
+                           'predictions': predictions}
     return loaded_explanations
 
 def load_explanations_of_many_models(dataset_name: str, model_names: list[str], explanation_name: str, root_images=None, 
@@ -77,9 +81,10 @@ def _filter_loaded_data_by_image_paths(loaded_data: dict, paths_to_leave_list: l
                             'paths': [loaded_data['paths'][i] for i in indices_to_leave], 
                             'labels': loaded_data['labels'][indices_to_leave], 
                             'model_name': loaded_data['model_name'], 
-                            'explanation_name': loaded_data['explanation_name']}
+                            'explanation_name': loaded_data['explanation_name'],
+                            'predictions': loaded_data['predictions'][indices_to_leave]}
     return filtered_loaded_data
 
 def _trim_image_path(path: str):
-    """a/b/c/d/e.jpg -> d/e.jpg - leavly only filename and its parent directory name"""
+    """a/b/c/d/e.jpg -> d/e.jpg - leave only filename and its parent directory name"""
     return os.path.join(os.path.basename(os.path.dirname(path)), os.path.basename(path))
