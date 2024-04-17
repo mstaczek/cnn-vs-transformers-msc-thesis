@@ -105,6 +105,8 @@ Before fix | After fix
 
 Goal: repeat `20240414-1-2x2-pca-comparison` with fixed EfficientNet_B4.
 
+Note: only GradCAM PCA plots were recomputed.
+
 ![](20240414-3-2x2-pca-comparison-fixed-efficientnet-b4/pca_gradcam_kernelshap_comparison.png)
 
 ## 20240417-gradcam-256-only-same-prediction
