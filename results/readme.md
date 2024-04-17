@@ -96,3 +96,44 @@ Before fix | After fix
 Goal: repeat `20240414-1-2x2-pca-comparison` with fixed EfficientNet_B4.
 
 ![](20240414-3-2x2-pca-comparison-fixed-efficientnet-b4/pca_gradcam_kernelshap_comparison.png)
+
+## 20240417-gradcam-256-only-same-prediction
+
+Goal: 
+
+- count the number of images on which a given pair of models gave the same prediction (not necessarily correct, but the same),
+- compute similarity matrices for cosine and rbf but using only images for which a given pair of models gave the same prediction,
+- compute similarity between this matrix of counts of same predictions and all similarity matrices from earlier.
+
+Setting:
+
+- as in `20240410-gradcam-256`, but for 8 batches of 32 images, same 256 total.
+
+Took 300s with T4 GPU on Colab.
+
+### Results:
+
+Correlations between a matrix of count of same predictions and different similarity matrices (rbf/cosine and using [all/only matching] predictions):
+
+|               | All images | Only matching predictions |
+|---------------|------------|---------------------------|
+| Cosine        | 0.695880   | 0.672233                  |
+| RBF           | 0.642113   | 0.641272                  |
+
+Counts heatmap: 
+
+![](20240417-gradcam-256-only-same-prediction/same_predictions_fractions_heatmap.png)
+
+Similarity matrices that it was compared to:
+
+|               | All images | Only images with matching prediction |
+|---------------|--------|-----|
+| Cosine        | ![](20240417-gradcam-256-only-same-prediction/heatmap_cosine_all.png) | ![](20240417-gradcam-256-only-same-prediction/heatmap_cosine_only_matching.png) |
+| RBF           | ![](20240417-gradcam-256-only-same-prediction/heatmap_rbf_all.png) | ![](20240417-gradcam-256-only-same-prediction/heatmap_rbf_only_matching.png) |
+
+PCA obtained for these similarity matrices:
+
+|               | All images | Only images with matching prediction |
+|---------------|--------|-----|
+| Cosine        | ![](20240417-gradcam-256-only-same-prediction/pca_cosine_all.png) | ![](20240417-gradcam-256-only-same-prediction/pca_cosine_only_matching_prediction.png) |
+| RBF           | ![](20240417-gradcam-256-only-same-prediction/pca_rbf.png) | ![](20240417-gradcam-256-only-same-prediction/pca_rbf_only_matching_prediction.png) |
