@@ -12,7 +12,7 @@ models_mapping = {
     'DenseNet121'     : DenseNet121,
     'EfficientNet_B3' : EfficientNet_B3,
     'EfficientNet_B4' : EfficientNet_B4,
-    'ConvNeXtV2_Nano': ConvNeXtV2_Nano,
+    'ConvNeXtV2_Nano' : ConvNeXtV2_Nano,
     'PyramidViT_V2_B2': PyramidViT_V2_B2,
     'MobileNetV3'     : MobileNetV3,
     'Swin_T'          : Swin_T,
