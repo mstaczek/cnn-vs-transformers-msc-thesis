@@ -11,6 +11,7 @@ Here I document all experiments.
 - [20240414-2-gradcam-1024-fixed-efficientnet-b4](#20240414-2-gradcam-1024-fixed-efficientnet-b4)
 - [20240414-3-2x2-pca-comparison-fixed-efficientnet-b4](#20240414-3-2x2-pca-comparison-fixed-efficientnet-b4)
 - [20240417-gradcam-256-only-same-prediction](#20240417-gradcam-256-only-same-prediction)
+- [20240421-fixing-kernelshap](#20240421-fixing-kernelshap)
 
 ## 20240410-gradcam-256
 
@@ -149,3 +150,20 @@ PCA obtained for these similarity matrices:
 |---------------|--------|-----|
 | Cosine        | ![](20240417-gradcam-256-only-same-prediction/pca_cosine_all.png) | ![](20240417-gradcam-256-only-same-prediction/pca_cosine_only_matching_prediction.png) |
 | RBF           | ![](20240417-gradcam-256-only-same-prediction/pca_rbf.png) | ![](20240417-gradcam-256-only-same-prediction/pca_rbf_only_matching_prediction.png) |
+
+## 20240421-fixing-kernelshap
+
+Goal: Change KernelSHAP settings to improve the quality of explanations.
+
+Settings:
+
+Before: 64 segments and sampled 100 times. New: 50 segments and sampled 100 times. Reason: In my Bsc thesis we based on KernelSHAP with 50 segments and sampled 50 times by default, so possibly here it should also work. Also, changed the way explanations are computed: one image at a time, not in batches.
+
+Results: Not much improvement. Possibly, further increasing the number of samples would help. Also, segmentation is not perfect and has some influence.
+
+|               | Before | After |
+|---------------|--------|-------|
+| ConvNeXtV2_Nano - little change | ![](20240421-fixing-kernelshap/convnextv2_before.png) | ![](20240421-fixing-kernelshap/convnextv2_after.png) |
+| ConvNeXtV2_Nano - slight change | ![](20240421-fixing-kernelshap/convnextv2_before_2.png) | ![](20240421-fixing-kernelshap/convnextv2_after_2.png) |
+| ResNet18      | ![](20240421-fixing-kernelshap/resnet_before.png) | ![](20240421-fixing-kernelshap/resnet_after.png) |
+| ResNet18      | ![](20240421-fixing-kernelshap/resnet_before_2.png) | ![](20240421-fixing-kernelshap/resnet_after_2.png) |
