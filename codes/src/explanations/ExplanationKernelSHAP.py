@@ -6,10 +6,9 @@ from skimage import segmentation
 import cv2
 import numpy as np
 from pytorch_grad_cam.utils.image import show_cam_on_image
-import warnings
 
 class ExplanationKernelSHAP(Explanation):
-    N_SEGMENTS = 64
+    N_SEGMENTS = 50
     N_SAMPLES = 100
 
     def __init__(self, device: str = 'cpu'):
@@ -22,11 +21,18 @@ class ExplanationKernelSHAP(Explanation):
             segmentation.slic(input_tensor.clone().detach().cpu().numpy().squeeze().transpose((1, 2, 0)), n_segments=self.N_SEGMENTS, start_label=0)
             for input_tensor in images
         ])).int()
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore")
-            attributions = self.kernel_shap_explanation_method.attribute(images.to(self.device), target=targets, 
-                                                                         baselines=baselines.to(self.device), n_samples=self.N_SAMPLES, 
-                                                                         feature_mask=feature_masks.to(self.device))
+        attr_list = []
+        for input_image, baseline, target, mask in\
+                zip(images.to(self.device), baselines.to(self.device), targets, feature_masks.to(self.device)):
+            attr = self.kernel_shap_explanation_method.attribute(
+                input_image.unsqueeze(0),
+                target=target.unsqueeze(0),
+                baselines=baseline.unsqueeze(0),
+                feature_mask=mask.unsqueeze(0),
+                n_samples=self.N_SAMPLES
+            )
+            attr_list.append(attr)
+        attributions = torch.concat(attr_list)
         results = attributions.cpu().detach().numpy().sum(axis=1)
         explanations = (results - np.min(results)) / (np.max(results) - np.min(results))
         return explanations
