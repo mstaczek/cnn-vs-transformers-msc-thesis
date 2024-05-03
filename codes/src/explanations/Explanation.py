@@ -1,5 +1,8 @@
 from src.models import Model
 import torch
+import cv2
+from pytorch_grad_cam.utils.image import show_cam_on_image
+import numpy as np
 
 class Explanation:
     def __init__(self, name: str, device: str = 'cpu'):
@@ -30,9 +33,13 @@ class Explanation:
         # return size Batch x H x W
         raise NotImplementedError
     
-    def save(self, path_image: str, path_explanation: str, explanation: torch.Tensor):
-        raise NotImplementedError
-    
     def after_computing_explanations(self, model):
         model.move_to_device('cpu')
         torch.cuda.empty_cache()
+
+    def save(self, path_image: str, path_explanation: str, explanation: torch.Tensor):
+        image = cv2.imread(path_image, 1)[:, :, ::-1]
+        image = cv2.resize(image, (224, 224))
+        image = np.float32(image) / 255
+        image_with_explanation = show_cam_on_image(image, explanation)
+        cv2.imwrite(path_explanation, image_with_explanation)

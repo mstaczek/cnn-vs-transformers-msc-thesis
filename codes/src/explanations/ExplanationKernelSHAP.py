@@ -39,10 +39,3 @@ class ExplanationKernelSHAP(Explanation):
 
     def _update_explanation_method(self, model: Model):        
         self.kernel_shap_explanation_method = KernelShap(model.get_model())
-        
-    def save(self, path_image: str, path_explanation: str, explanation: torch.Tensor):
-        image = cv2.imread(path_image, 1)[:, :, ::-1]
-        image = cv2.resize(image, (224, 224))
-        image = np.float32(image) / 255
-        image_with_explanation = show_cam_on_image(image, explanation)
-        cv2.imwrite(path_explanation, image_with_explanation)
