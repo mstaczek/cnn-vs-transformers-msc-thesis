@@ -3,12 +3,15 @@ from tqdm import tqdm
 
 
 def compute_explanations(dataset_name: str, model_name: str, explanation_name: str, root_images=None, 
-                         root_explanations=None, number_of_batches_to_process=None, device='cpu', **kwargs):
+                         root_explanations=None, number_of_batches_to_process=None, device='cpu', 
+                         models_weigths_pretrained='imagenet', **kwargs):
     """
         defaults paths to '../datasets/imagenette2/train' and '../explanations'
     """
 
-    dataset_manager, model, explanation = create_classes_from_strings(model_name, dataset_name, explanation_name, root_images, root_explanations, device)
+    dataset_manager, model, explanation = create_classes_from_strings(model_name, dataset_name, explanation_name, 
+                                                                      root_images, root_explanations, device,
+                                                                      models_weigths_pretrained)
 
     dataloader = dataset_manager.get_dataloader(**kwargs)
 

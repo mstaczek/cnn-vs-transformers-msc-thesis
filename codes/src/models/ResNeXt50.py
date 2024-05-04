@@ -3,12 +3,13 @@ import torch
 import timm
 
 class ResNeXt50(Model):
-    def __init__(self):
-        super().__init__("ResNeXt50")
+    def __init__(self, pretrained_weights_name=None):
+        super().__init__("ResNeXt50", pretrained_weights_name)
 
     def _build_model(self) -> torch.nn.Module:
-        model = timm.create_model('resnext50_32x4d.a1h_in1k', pretrained=True)
-        print(f"Loaded model: https://huggingface.co/{model.default_cfg['hf_hub_id']}")
+        if self.pretrained_weights_name == 'imagenet':
+            model = timm.create_model('resnext50_32x4d.a1h_in1k', pretrained=True)
+            print(f"Loaded model: https://huggingface.co/{model.default_cfg['hf_hub_id']}")
         return model
     
     def make_sure_is_initialized(self):

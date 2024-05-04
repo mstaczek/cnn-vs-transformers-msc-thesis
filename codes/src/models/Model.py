@@ -1,10 +1,11 @@
 import torch
 
 class Model:
-    def __init__(self, name: str):
+    def __init__(self, name: str, pretrained_weights_name: str = None):
         self.name = name
         self.model = None
         self.is_initialized = False
+        self.pretrained_weights_name = pretrained_weights_name if pretrained_weights_name is not None else 'imagenet'
 
     def _build_model(self) -> torch.nn.Module:
         raise NotImplementedError

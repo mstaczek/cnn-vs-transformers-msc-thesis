@@ -4,7 +4,8 @@ import torch
 import numpy as np
 import random
 
-def create_classes_from_strings(model_name: str, dataset_name: str, explanation_name: str, root_images=None, root_explanations=None, device: str='cpu'):
+def create_classes_from_strings(model_name: str, dataset_name: str, explanation_name: str, root_images=None, root_explanations=None, device: str='cpu',
+                                models_weigths_pretrained="imagenet"):
     if root_images is None:
         root_images = os.path.join(os.pardir, 'datasets', 'imagenette2', 'train')
     if root_explanations is None:
@@ -13,7 +14,7 @@ def create_classes_from_strings(model_name: str, dataset_name: str, explanation_
     assert_class_names_are_defined(dataset_name, model_name, explanation_name)
 
     dataset_manager = datasets_mapping[dataset_name](root_images, root_explanations)
-    model = models_mapping[model_name]()
+    model = models_mapping[model_name](pretrained_weights_name=models_weigths_pretrained)
     explanation = explanations_mapping[explanation_name](device)
     
     return dataset_manager, model, explanation
