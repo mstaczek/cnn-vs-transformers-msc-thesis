@@ -20,3 +20,5 @@ trained_models
     └───SomeModel2
         └───0.9452.pth
 ```
+
+Trained file are too big to be stored on Github. Download link TBA.
