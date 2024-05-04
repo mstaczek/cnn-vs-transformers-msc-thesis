@@ -5,16 +5,18 @@ import numpy as np
 import random
 
 def create_classes_from_strings(model_name: str, dataset_name: str, explanation_name: str, root_images=None, root_explanations=None, device: str='cpu',
-                                models_weigths_pretrained="imagenet"):
+                                models_weigths_pretrained="imagenet", root_trained_models=None):
     if root_images is None:
         root_images = os.path.join(os.pardir, 'datasets', 'imagenette2', 'train')
     if root_explanations is None:
         root_explanations = os.path.join(os.pardir, 'explanations')
+    if root_trained_models is None:
+        root_trained_models = os.path.join(os.pardir, 'trained_models', models_weigths_pretrained)
 
     assert_class_names_are_defined(dataset_name, model_name, explanation_name)
 
     dataset_manager = datasets_mapping[dataset_name](root_images, root_explanations)
-    model = models_mapping[model_name](pretrained_weights_name=models_weigths_pretrained)
+    model = models_mapping[model_name](pretrained_weights_name=models_weigths_pretrained, root_trained_models=root_trained_models)
     explanation = explanations_mapping[explanation_name](device)
     
     return dataset_manager, model, explanation

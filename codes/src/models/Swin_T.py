@@ -3,13 +3,15 @@ import torch
 import timm
 
 class Swin_T(Model):
-    def __init__(self, pretrained_weights_name=None):
-        super().__init__("Swin_T", pretrained_weights_name)
+    def __init__(self, **kwargs):
+        super().__init__("Swin_T", **kwargs)
 
     def _build_model(self) -> torch.nn.Module:
+        if self.pretrained_weights_name != 'imagenet':
+            model = self._load_model_from_disk()
         if self.pretrained_weights_name == 'imagenet':
             model = timm.create_model('swin_tiny_patch4_window7_224.ms_in1k', pretrained=True)
-            print(f"Loaded model: https://huggingface.co/{model.default_cfg['hf_hub_id']}")
+            print(f"Loaded default imagenet-pretrained model: https://huggingface.co/{model.default_cfg['hf_hub_id']}")
         return model
     
     def make_sure_is_initialized(self):

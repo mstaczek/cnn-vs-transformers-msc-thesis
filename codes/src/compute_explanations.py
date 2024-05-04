@@ -4,14 +4,16 @@ from tqdm import tqdm
 
 def compute_explanations(dataset_name: str, model_name: str, explanation_name: str, root_images=None, 
                          root_explanations=None, number_of_batches_to_process=None, device='cpu', 
-                         models_weigths_pretrained='imagenet', **kwargs):
+                         models_weigths_pretrained='imagenet', root_trained_models=None, **kwargs):
     """
-        defaults paths to '../datasets/imagenette2/train' and '../explanations'
+        defaults paths are '../datasets/imagenette2/train' and '../explanations'
+        pretrained models are loaded by default from f'../trained_models/{self.root_trained_models}/{self.model_name}/', 
+            otherwise from `root_trained_models + '/{self.model_name}/'` for each model. Fallback is imagenet pretrained weights.
     """
 
     dataset_manager, model, explanation = create_classes_from_strings(model_name, dataset_name, explanation_name, 
                                                                       root_images, root_explanations, device,
-                                                                      models_weigths_pretrained)
+                                                                      models_weigths_pretrained, root_trained_models)
 
     dataloader = dataset_manager.get_dataloader(**kwargs)
 
