@@ -31,7 +31,6 @@ class Model:
             filename = self.root_trained_models + os.listdir(self.root_trained_models)[-1]
             model = torch.load(filename, map_location='cpu')
             print(f"Loaded model: {filename}")
-            print(model)
             return model
         except:
             print(f'Did not find weigths for {self.name} model pretrained on {self.pretrained_weights_name} in folder {self.root_trained_models}.')
