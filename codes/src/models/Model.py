@@ -7,7 +7,7 @@ class Model:
         self.model = None
         self.is_initialized = False
         self.pretrained_weights_name = pretrained_weights_name if pretrained_weights_name is not None else 'imagenet'
-        self.root_trained_models = root_trained_models + f'/{self.name}/' if root_trained_models is not None else f'../trained_models/{self.pretrained_weights_name}/{self.model}/'
+        self.root_trained_models = root_trained_models + f'/{self.name}/' if root_trained_models is not None else f'../trained_models/{self.pretrained_weights_name}/{self.name}/'
 
     def _build_model(self) -> torch.nn.Module:
         raise NotImplementedError
