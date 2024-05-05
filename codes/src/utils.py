@@ -35,18 +35,18 @@ def set_seed(seed: int = 912723012):
     random.seed(seed)
 
 models_to_architecture_mapping = {
+    'ConvNeXtV2_Nano' : 'CNN',
     'DeiT_S'          : 'transformer',
     'DeiT_T'          : 'transformer',
     'DenseNet121'     : 'CNN',
     'EfficientNet_B3' : 'CNN',
     'EfficientNet_B4' : 'CNN',
-    'ConvNeXtV2_Nano' : 'CNN',
-    'PyramidViT_V2_B2': 'transformer',
     'MobileNetV3'     : 'CNN',
-    'Swin_T'          : 'transformer',
+    'PyramidViT_V2_B2': 'transformer',
     'ResNet18'        : 'CNN',
     'ResNet50'        : 'CNN',
     'ResNeXt50'       : 'CNN',
     'Res2Net50'       : 'CNN',
+    'Swin_T'          : 'transformer',
     'ViT_B_32'        : 'transformer',
 }
