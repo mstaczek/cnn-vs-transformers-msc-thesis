@@ -7,7 +7,6 @@ from captum.attr import IntegratedGradients
 
 class ExplanationIntegratedGradients(Explanation):
     N_STEPS = 50 # default 50
-    INTERNAL_BATCH_SIZE = 32
 
     def __init__(self, device: str = 'cpu'):
         super().__init__("IntegratedGradients", device)
@@ -15,7 +14,7 @@ class ExplanationIntegratedGradients(Explanation):
     def _compute_explanation(self, model: Model, images: torch.Tensor) -> torch.Tensor:
         targets = model(images.to(self.device)).max(1).indices
         attributions = self.integrated_gradients_explanation_method.attribute(images.to(self.device), 
-                            target=targets, n_steps=self.N_STEPS, internal_batch_size=self.INTERNAL_BATCH_SIZE) 
+                            target=targets, n_steps=self.N_STEPS, internal_batch_size=images.shape[0]) 
         
         results = attributions.cpu().detach().numpy().sum(axis=1)
         explanations = (results - np.min(results)) / (np.max(results) - np.min(results))
