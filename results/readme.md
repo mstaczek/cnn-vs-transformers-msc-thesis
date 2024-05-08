@@ -174,11 +174,18 @@ Goal: Add new explanation method (Integrated Gradients) and finetune models on I
 
 Settings: use `timm` and finetune each models with `vision_learner.fine_tune` for 1 epoch. Then, compute explanations for all of the models and 3 explanation methods. If no fintuned model was available, the original model was used (pretrained on Imagenet). Computed explanations for 256 images with GradCAM and for 64 for KernelSHAP and Integrated Gradients.
 
-Finetuning results:
+### Finetuning results:
 
 - funetuning took up to 5 minutes per model on Colab with T4 GPU,
 - accuracies of models are around 97%-99% on Imagenette2,
-- some models failed to finetune due to timm and fastai errors (MobileNetV3 and Swin_T)
+- some models failed to finetune due to timm and fastai errors (MobileNetV3 and Swin_T),
+- explanations are basically identical as the ones before finetuning. A few cherrypicked images where more changes were visible, are below.
+
+<!-- sample explanations, 3 columns: model, before, after -->
+| Model | Before | After |
+|---|---|---|
+| ResNet18 | ![](20240505-finetuned-gradcam-256-ig-64-kernelshap-64/old-gradcam-resnet18-1.png) | ![](20240505-finetuned-gradcam-256-ig-64-kernelshap-64/new-gradcam-resnet18-1.png) |
+| ConvNeXtV2_Nano | ![](20240505-finetuned-gradcam-256-ig-64-kernelshap-64/old-kernelshap-convnext-1.png) | ![](20240505-finetuned-gradcam-256-ig-64-kernelshap-64/new-kernelshap-convnext-1.png) |
 
 ### Integrated Gradients
 
