@@ -167,3 +167,48 @@ Results: Not much improvement. Possibly, further increasing the number of sample
 | ConvNeXtV2_Nano - slight change | ![](20240421-fixing-kernelshap/convnextv2_before_2.png) | ![](20240421-fixing-kernelshap/convnextv2_after_2.png) |
 | ResNet18      | ![](20240421-fixing-kernelshap/resnet_before.png) | ![](20240421-fixing-kernelshap/resnet_after.png) |
 | ResNet18      | ![](20240421-fixing-kernelshap/resnet_before_2.png) | ![](20240421-fixing-kernelshap/resnet_after_2.png) |
+
+## 20240505-finetuned-gradcam-256-ig-64-kernelshap-64
+
+Goal: Add new explanation method (Integrated Gradients) and finetune models on Imagenette2 and see if the results are better. 
+
+Settings: use `timm` and finetune each models with `vision_learner.fine_tune` for 1 epoch. Then, compute explanations for all of the models and 3 explanation methods. If no fintuned model was available, the original model was used (pretrained on Imagenet). Computed explanations for 256 images with GradCAM and for 64 for KernelSHAP and Integrated Gradients.
+
+Finetuning results:
+
+- funetuning took up to 5 minutes per model on Colab with T4 GPU,
+- accuracies of models are around 97%-99% on Imagenette2,
+- some models failed to finetune due to timm and fastai errors (MobileNetV3 and Swin_T)
+
+### Integrated Gradients
+
+Sample explanations:
+| ResNet18 | EfficientNet_B3 | ViT_B_32 |
+|---|---|---|
+| ![](20240505-finetuned-gradcam-256-ig-64-kernelshap-64/ig-resnet18.png) | ![](20240505-finetuned-gradcam-256-ig-64-kernelshap-64/ig-efficientnet-b3.png) | ![](20240505-finetuned-gradcam-256-ig-64-kernelshap-64/ig-vit-b-32.png) |
+
+Comment: Integrated Gradients look best without background image. In general, they are single-pixel dots, here visible in the first 2 explanations as small artefacts on the dog head or body.
+
+### Similarities between models
+
+For cosine similarity:
+
+| Explanation | All images | Only matching predictions |
+|---|---|---|
+| KernelSHAP | ![](20240505-finetuned-gradcam-256-ig-64-kernelshap-64/pca_kernelshap_cosine_all.png) | ![](20240505-finetuned-gradcam-256-ig-64-kernelshap-64/pca_kernelshap_cosine_only_matching.png) |
+| Integrated Gradients | ![](20240505-finetuned-gradcam-256-ig-64-kernelshap-64/pca_integratedgradients_cosine_all.png) | ![](20240505-finetuned-gradcam-256-ig-64-kernelshap-64/pca_integratedgradients_cosine_only_matching.png) |
+| GradCAM | ![](20240505-finetuned-gradcam-256-ig-64-kernelshap-64/pca_gradcam_cosine_all.png) | ![](20240505-finetuned-gradcam-256-ig-64-kernelshap-64/pca_gradcam_cosine_only_matching.png) |
+
+For RBF similarity:
+
+| Explanation | All images | Only matching predictions |
+|---|---|---|
+| KernelSHAP | ![](20240505-finetuned-gradcam-256-ig-64-kernelshap-64/pca_kernelshap_rbf_all.png) | ![](20240505-finetuned-gradcam-256-ig-64-kernelshap-64/pca_kernelshap_rbf_only_matching.png) |
+| Integrated Gradients | ![](20240505-finetuned-gradcam-256-ig-64-kernelshap-64/pca_integratedgradients_rbf_all.png) | ![](20240505-finetuned-gradcam-256-ig-64-kernelshap-64/pca_integratedgradients_rbf_only_matching.png) |
+| GradCAM | ![](20240505-finetuned-gradcam-256-ig-64-kernelshap-64/pca_gradcam_rbf_all.png) | ![](20240505-finetuned-gradcam-256-ig-64-kernelshap-64/pca_gradcam_rbf_only_matching.png) |
+
+
+### Comment
+
+- Similarity of models after applying GradCAM explanation method seem to give similar PCA plots for both cosine and RBF similarity metrics.
+- There is no clear similarity between PCA plots of models similarity generated with different explanation methods or metrics.
