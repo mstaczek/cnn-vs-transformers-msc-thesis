@@ -172,16 +172,19 @@ Results: Not much improvement. Possibly, further increasing the number of sample
 
 Goal: Add new explanation method (Integrated Gradients) and finetune models on Imagenette2 and see if the results are better. 
 
-Settings: use `timm` and finetune each models with `vision_learner.fine_tune` for 1 epoch. Then, compute explanations for all of the models and 3 explanation methods. If no fintuned model was available, the original model was used (pretrained on Imagenet). Computed explanations for 256 images with GradCAM and for 64 for KernelSHAP and Integrated Gradients.
+Settings: 
+- use `timm` and finetune each models with `vision_learner.fine_tune` for 1 epoch. 
+- compute explanations for all of the models and 3 explanation methods. If no fintuned model was available, the original model was used (pretrained on Imagenet).
+- Computed explanations for 256 images with GradCAM and for 64 for KernelSHAP and Integrated Gradients.
+- Integrated Gradients was set with a default hyperparameter value of 50 steps.
 
 ### Finetuning results:
 
 - funetuning took up to 5 minutes per model on Colab with T4 GPU,
 - accuracies of models are around 97%-99% on Imagenette2,
 - some models failed to finetune due to timm and fastai errors (MobileNetV3 and Swin_T),
-- explanations are basically identical as the ones before finetuning. A few cherrypicked images where more changes were visible, are below.
+- explanations for GradCAM are almost the same. For KernelSHAP they look different but neither better nor worse.
 
-<!-- sample explanations, 3 columns: model, before, after -->
 | Model | Before | After |
 |---|---|---|
 | ResNet18 | ![](20240505-finetuned-gradcam-256-ig-64-kernelshap-64/old-gradcam-resnet18-1.png) | ![](20240505-finetuned-gradcam-256-ig-64-kernelshap-64/new-gradcam-resnet18-1.png) |
@@ -215,7 +218,7 @@ For RBF similarity:
 | GradCAM | ![](20240505-finetuned-gradcam-256-ig-64-kernelshap-64/pca_gradcam_rbf_all.png) | ![](20240505-finetuned-gradcam-256-ig-64-kernelshap-64/pca_gradcam_rbf_only_matching.png) |
 
 
-### Comment
+### Comments
 
 - Similarity of models after applying GradCAM explanation method seem to give similar PCA plots for both cosine and RBF similarity metrics.
 - There is no clear similarity between PCA plots of models similarity generated with different explanation methods or metrics.
