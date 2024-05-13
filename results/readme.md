@@ -12,6 +12,7 @@ Here I document all experiments.
 - [20240414-3-2x2-pca-comparison-fixed-efficientnet-b4](#20240414-3-2x2-pca-comparison-fixed-efficientnet-b4)
 - [20240417-gradcam-256-only-same-prediction](#20240417-gradcam-256-only-same-prediction)
 - [20240421-fixing-kernelshap](#20240421-fixing-kernelshap)
+- [20240505-finetuned-gradcam-256-ig-64-kernelshap-64](#20240505-finetuned-gradcam-256-ig-64-kernelshap-64)
 
 ## 20240410-gradcam-256
 
