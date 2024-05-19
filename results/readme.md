@@ -223,3 +223,28 @@ For RBF similarity:
 
 - Similarity of models after applying GradCAM explanation method seem to give similar PCA plots for both cosine and RBF similarity metrics.
 - There is no clear similarity between PCA plots of models similarity generated with different explanation methods or metrics.
+
+
+## 20240519-print-gradcam-resolutions
+
+Goal: Get resolution of GradCAM explanations for all models.
+
+Results:
+
+| Model Name | Resolution |
+|---|---|
+| ConvNeXt V2-N | 7x7 |
+| DeiT-S | 14x14 |
+| DeiT-T | 14x14 |
+| DenseNet121 | 7x7 |
+| EfficientNet-B3 | 7x7 |
+| EfficientNet-B4 | 7x7 |
+| MobileNetV3 | 7x7 |
+| PVTv2-B2 | 7x7 |
+| ResNet18 | 7x7 |
+| ResNet50 | 7x7 |
+| ResNeXt50 | 7x7 |
+| Res2Net50 | 7x7 |
+| Swin-T | 7x7 |
+| ViT-B/32 | 7x7 |
+
