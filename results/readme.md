@@ -13,6 +13,8 @@ Here I document all experiments.
 - [20240417-gradcam-256-only-same-prediction](#20240417-gradcam-256-only-same-prediction)
 - [20240421-fixing-kernelshap](#20240421-fixing-kernelshap)
 - [20240505-finetuned-gradcam-256-ig-64-kernelshap-64](#20240505-finetuned-gradcam-256-ig-64-kernelshap-64)
+- [20240519-print-gradcam-resolutions](#20240519-print-gradcam-resolutions)
+- [20240521-compare-kernelshap-steps](#20240521-compare-kernelshap-steps)
 
 ## 20240410-gradcam-256
 
@@ -247,4 +249,19 @@ Results:
 | Res2Net50 | 7x7 |
 | Swin-T | 7x7 |
 | ViT-B/32 | 7x7 |
+
+
+## 20240521-compare-kernelshap-steps
+
+Goal: Compare KernelSHAP explanations for different number of steps.
+
+Settings: image segmented into 50 superpixels. Number of steps: 50, 100, 150, 200, 250, 300, 400. Explained image is of class fish, model is ResNet18 and the image is:
+
+![](20240521-kernelshap-more-samples/n01440764_1185.JPEG)
+
+Results:
+
+Time-wise, there is a linear increase in time with the number of steps.
+
+![](20240521-kernelshap-more-samples/output.png)
 
