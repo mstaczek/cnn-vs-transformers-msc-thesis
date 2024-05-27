@@ -15,7 +15,7 @@ def compute_explanations(dataset_name: str, model_name: str, explanation_name: s
                                                                       root_images, root_explanations, device,
                                                                       models_weigths_pretrained, root_trained_models)
 
-    dataloader = dataset_manager.get_dataloader(**kwargs)
+    dataloader = dataset_manager.get_dataloader(model=model, **kwargs)
 
     explanation.before_computing_explanations(model)
 

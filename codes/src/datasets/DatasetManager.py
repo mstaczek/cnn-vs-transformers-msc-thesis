@@ -57,8 +57,8 @@ class DatasetManager:
     def _get_transforms(self):
         raise NotImplementedError
 
-    def get_dataloader(self, **kwargs) -> DataLoader:
-        transforms = self._get_transforms()
+    def get_dataloader(self, model: Model, **kwargs) -> DataLoader:
+        transforms = self._get_transforms(model)
         dataset = ImageFolderWithPaths(root=self.root_images, transform=transforms)
         dataloader = DataLoader(dataset, **self.dataloader_random_seed_params, **kwargs)
         return dataloader
