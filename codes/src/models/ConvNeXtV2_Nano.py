@@ -10,7 +10,7 @@ class ConvNeXtV2_Nano(Model):
         if self.pretrained_weights_name != 'imagenet':
             model = self._load_model_from_disk()
         if self.pretrained_weights_name == 'imagenet':
-            model = timm.create_model('convnextv2_nano.fcmae_ft_in22k_in1k_384', pretrained=True)
+            model = timm.create_model('convnextv2_nano.fcmae_ft_in22k_in1k', pretrained=True)
             print(f"Loaded default imagenet-pretrained model: https://huggingface.co/{model.default_cfg['hf_hub_id']}")
         return model
     
