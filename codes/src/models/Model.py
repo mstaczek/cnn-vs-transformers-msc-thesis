@@ -9,15 +9,22 @@ class Model:
         self.pretrained_weights_name = pretrained_weights_name if pretrained_weights_name is not None else 'imagenet'
         self.root_trained_models = root_trained_models + f'/{self.name}/' if root_trained_models is not None else f'../trained_models/{self.pretrained_weights_name}/{self.name}/'
 
-    def _build_model(self) -> torch.nn.Module:
+    def _load_model(self) -> torch.nn.Module:
         raise NotImplementedError
     
-    def make_sure_is_initialized(self):
+    def _initialize_model(self):
         raise NotImplementedError
+        
+    def make_sure_is_initialized(self):
+        if self.is_initialized is False:
+            self.model = self.get_model()
+            self._initialize_model()
+            self.is_initialized = True    
     
     def get_model(self) -> torch.nn.Module:
         if self.model is None:
-            self.model = self._build_model()
+            model = self._load_model()
+            self.model = model.eval()
         return self.model
     
     def move_to_device(self, device: str):
