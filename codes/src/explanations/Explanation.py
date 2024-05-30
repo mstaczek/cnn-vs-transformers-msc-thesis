@@ -2,6 +2,8 @@ from src.models import Model
 import torch
 import cv2
 from pytorch_grad_cam.utils.image import show_cam_on_image
+from matplotlib.colors import LinearSegmentedColormap
+import copy
 import numpy as np
 
 class Explanation:
@@ -38,8 +40,23 @@ class Explanation:
         torch.cuda.empty_cache()
 
     def save(self, path_image: str, path_explanation: str, explanation: torch.Tensor):
+        only_explanation_path = path_explanation.replace('.png', '_only_explanation.png')
+        self._save_explanation_as_png(only_explanation_path, explanation)
+        
         image = cv2.imread(path_image, 1)[:, :, ::-1]
         image = cv2.resize(image, (224, 224))
         image = np.float32(image) / 255
         image_with_explanation = show_cam_on_image(image, explanation)
         cv2.imwrite(path_explanation, image_with_explanation)
+        
+    def _save_explanation_as_png(self, path_explanation: str, explanation: torch.Tensor):
+        explanation = copy.deepcopy(explanation)
+        cmap = LinearSegmentedColormap.from_list("red-white-green", ["red", "white", "green"])
+        vmin, vmax = -1, 1
+        attribution_normalized = 255 * (explanation - vmin) / (vmax - vmin)
+        attribution_normalized = np.clip(attribution_normalized, 0, 255).astype(np.uint8)    
+        attribution_colored = cmap(attribution_normalized / 255.0)[:, :, :3] 
+        attribution_colored = (attribution_colored * 255).astype(np.uint8)     
+        attribution_colored_bgr = cv2.cvtColor(attribution_colored, cv2.COLOR_RGB2BGR)    
+        cv2.imwrite(path_explanation, attribution_colored_bgr)
+    
