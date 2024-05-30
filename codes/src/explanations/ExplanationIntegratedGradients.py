@@ -16,8 +16,13 @@ class ExplanationIntegratedGradients(Explanation):
         attributions = self.integrated_gradients_explanation_method.attribute(images.to(self.device), 
                             target=targets, n_steps=self.N_STEPS, internal_batch_size=images.shape[0]) 
         
-        results = attributions.cpu().detach().numpy().sum(axis=1)
-        explanations = (results - np.min(results)) / (np.max(results) - np.min(results))
+        explanations = attributions.cpu().detach().numpy().sum(axis=1)
+        for i in range(explanations.shape[0]):
+            high_percentile = np.percentile(explanations[i], 99.7)
+            low_percentile = np.percentile(explanations[i], 0.3)
+            explanations[i, explanations[i] > high_percentile] = high_percentile
+            explanations[i, explanations[i] < low_percentile] = low_percentile
+            explanations[i] = explanations[i] / np.max(np.abs(explanations[i]))
         return explanations
 
     def _update_explanation_method(self, model: Model):        
