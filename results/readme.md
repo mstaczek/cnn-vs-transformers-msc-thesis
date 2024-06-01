@@ -15,6 +15,7 @@ Here I document all experiments.
 - [20240505-finetuned-gradcam-256-ig-64-kernelshap-64](#20240505-finetuned-gradcam-256-ig-64-kernelshap-64)
 - [20240519-print-gradcam-resolutions](#20240519-print-gradcam-resolutions)
 - [20240521-compare-kernelshap-steps](#20240521-compare-kernelshap-steps)
+- [20240531-accuracy-not-resized](#20240531-accuracy-not-resized)
 
 ## 20240410-gradcam-256
 
@@ -265,3 +266,37 @@ Time-wise, there is a linear increase in time with the number of steps.
 
 ![](20240521-kernelshap-more-samples/output.png)
 
+
+## 20240531-accuracy-not-resized
+
+Goal: Check if using same transforms in dataloader affects models accuracy.
+
+Setting: 
+- Predict 1024 images using model-specific transforms (for all models).
+- Predict 1024 images using same transforms for all models - Resize straight to 224x224 and Normalize.
+- Calculate the difference in accuracy.
+
+Results:
+
+| Imagenette2 split: train | Imagenette2 split: val |
+|---|---|
+| ![](20240531-accuracy-not-resized/diff_train.png) | ![](20240531-accuracy-not-resized/diff_val.png) |
+
+Explanation: Models performance drops just by a few percent. For most models, the difference is that instead of getting center-cropped 224x224 pixels, they get full 256x256 images. EfficientNet models expect slightly larger images (B3 - 288, B4 - 320) and have visibly larger drop in accuracy. However, ViT model was the only with different Normalization of the images:
+- all models: `Normalize(mean=tensor([0.4850, 0.4560, 0.4060]), std=tensor([0.2290, 0.2240, 0.2250]))`
+- ViT: `Normalize(mean=tensor([0.5, 0.5, 0.5]), std=tensor([0.5, 0.5, 0.5]))`
+
+Models accuracies can be found in the `20240531-accuracy-not-resized` folder.
+
+Further investigation:
+- Take ViT model, take same common transformation as earlier (Resize to 224x224 and Normalize) and change Normalization to the model-specific one.
+
+Results:
+
+Accuracy difference between ViT model with model-specific transforms vs common transforms with model-specific Normalization:
+
+| Model | Imagennete2 split: train | Imagenette2 split: val |
+|---|---|---|
+| ViT_B_32 | 0.03 | 0.03 |
+
+Conclusion: The same transformations cannot be used for all models. However, CenterCrop can be ommited, and resizing images to the expected 224x224 size is ok. Normalization should be model-specific though, in particular, ViT model has to use it's normalization.

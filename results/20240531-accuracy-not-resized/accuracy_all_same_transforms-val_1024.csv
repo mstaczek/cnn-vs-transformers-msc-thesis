@@ -1,0 +1,15 @@
+model,accuracy
+ConvNeXtV2_Nano,0.8916
+DeiT_S,0.8984
+DeiT_T,0.7852
+DenseNet121,0.8047
+EfficientNet_B3,0.8838
+EfficientNet_B4,0.9062
+MobileNetV3,0.8789
+PyramidViT_V2_B2,0.9043
+Res2Net50,0.9004
+ResNet18,0.8057
+ResNet50,0.9277
+ResNeXt50,0.9355
+Swin_T,0.9023
+ViT_B_32,0.7461
