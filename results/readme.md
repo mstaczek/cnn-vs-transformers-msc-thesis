@@ -16,6 +16,7 @@ Here I document all experiments.
 - [20240519-print-gradcam-resolutions](#20240519-print-gradcam-resolutions)
 - [20240521-compare-kernelshap-steps](#20240521-compare-kernelshap-steps)
 - [20240531-accuracy-not-resized](#20240531-accuracy-not-resized)
+- [20240603-gradcam-512-histograms-clustering](#20240603-gradcam-512-histograms-clustering)
 
 ## 20240410-gradcam-256
 
@@ -300,3 +301,42 @@ Accuracy difference between ViT model with model-specific transforms vs common t
 | ViT_B_32 | 0.03 | 0.03 |
 
 Conclusion: The same transformations cannot be used for all models. However, CenterCrop can be ommited, and resizing images to the expected 224x224 size is ok. Normalization should be model-specific though, in particular, ViT model has to use it's normalization.
+
+## 20240603-gradcam-512-histograms-clustering
+
+### Part 1 - rerun GradCAM + histograms
+
+Goal: rerun GradCAM after last fixes, create histograms of similarities between every pair of explanations.
+
+Settings: Gradcam for 512 images, all models, cosine and RBF similarity.
+
+Results:
+
+| Similarity metric | Hitograms |
+|---|---|
+| Cosine | ![](20240603-gradcam-512-histograms-clustering/histograms_gradcam_cosine.png) |
+| RBF | ![](20240603-gradcam-512-histograms-clustering/histograms_gradcam_rbf.png) |
+
+Histograms confirm that some models are more different than the other, with no clear distinction between CNN and transformer models.
+
+### Part 2 - clustering
+
+Goal: for each csv (cosine and RBF similarity) create a hierachical clustering dendrogram, PCA plot as usually and graph community detection results.
+
+Settings: 
+
+- Analysis i sbased on the Part 1 of the experiment. 
+- Hierachical clustering colors are manually selected. 
+- Graph community detection is based on the Louvain algorithm.
+
+Results:
+
+| Visualization method | Cosine | RBF|
+|---|---|---|
+| PCA | ![](20240603-gradcam-512-histograms-clustering/pca_gradcam_cosine_all.png) | ![](20240603-gradcam-512-histograms-clustering/pca_gradcam_rbf_all.png) |
+| Hierachical clustering | ![](20240603-gradcam-512-histograms-clustering/dendrogram_hierarchical_gradcam_cosine_all.png) |  ![](20240603-gradcam-512-histograms-clustering/dendrogram_hierarchical_gradcam_rbf_all.png) | 
+| Graph community detection | ![](20240603-gradcam-512-histograms-clustering/graph_louvain_gradcam_cosine_all.png) | ![](20240603-gradcam-512-histograms-clustering/graph_louvain_gradcam_rbf_all.png) |
+
+
+Conclusions: Results are similar to each other, with no clear distinction between CNN and transformer models. Visualization methods are consistent with each other. PCA is the least readable and dendrogram is the most readable. Differences in values of the metrics influence the values or shapes in the plots but not the meaning.
+
