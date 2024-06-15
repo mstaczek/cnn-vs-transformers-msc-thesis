@@ -9,7 +9,7 @@ from pytorch_grad_cam.utils.image import show_cam_on_image
 
 class ExplanationKernelSHAP(Explanation):
     N_SEGMENTS = 50
-    N_SAMPLES = 100
+    N_SAMPLES = 350
 
     def __init__(self, device: str = 'cpu'):
         super().__init__("KernelSHAP", device)

@@ -6,7 +6,7 @@ from captum.attr import IntegratedGradients
 
 
 class ExplanationIntegratedGradients(Explanation):
-    N_STEPS = 50 # default 50
+    N_STEPS = 100 # default 50
 
     def __init__(self, device: str = 'cpu'):
         super().__init__("IntegratedGradients", device)
