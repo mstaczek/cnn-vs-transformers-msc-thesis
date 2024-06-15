@@ -17,6 +17,7 @@ Here I document all experiments.
 - [20240521-compare-kernelshap-steps](#20240521-compare-kernelshap-steps)
 - [20240531-accuracy-not-resized](#20240531-accuracy-not-resized)
 - [20240603-gradcam-512-histograms-clustering](#20240603-gradcam-512-histograms-clustering)
+- [20240613-sample-explanations-kernelshap-ig](#20240613-sample-explanations-kernelshap-ig)
 
 ## 20240410-gradcam-256
 
@@ -340,3 +341,25 @@ Results:
 
 Conclusions: Results are similar to each other, with no clear distinction between CNN and transformer models. Visualization methods are consistent with each other. PCA is the least readable and dendrogram is the most readable. Differences in values of the metrics influence the values or shapes in the plots but not the meaning.
 
+## 20240613-sample-explanations-kernelshap-ig
+
+Goal: compute a few sample explanations for KernelSHAP and Integrated Gradients. Vizualize them side by side.
+
+Settings:
+
+- KernelSHAP: 50 segments, 350 samples,
+- Integrated Gradients: 100 steps,
+- include only images for which all models gave the same prediction.
+
+Results:
+
+| Sample image 1 | Sample image 2 | Sample image 3 | Sample image 4 |
+|---|---|---|--|
+| ![](20240613-sample-explanations-kernelshap-ig/explanations_n02102040_2644.png) | ![](20240613-sample-explanations-kernelshap-ig/explanations_n03028079_49234.png) | ![](20240613-sample-explanations-kernelshap-ig/explanations_n03417042_11534.png) | ![](20240613-sample-explanations-kernelshap-ig/explanations_n03000684_15194.png) |
+
+Conclusions: 
+
+- Quality of explanations vary between images. 
+- KernelSHAP with same mask can make little sense if a tiny part of the image matters (eg. dog).
+- Integrated Gradients sometimes are random for ViT/DeiT.
+- Visible differences in GradCAM explanations between models.
