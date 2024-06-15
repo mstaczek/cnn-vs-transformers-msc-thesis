@@ -52,6 +52,10 @@ def load_explanations_of_many_models(dataset_name: str, model_names: list[str], 
     if not unify_lengths:
         return loaded_data_list
     
+    filtered_loaded_data_list = _unify_lenths(loaded_data_list)
+    return filtered_loaded_data_list
+
+def _unify_lenths(loaded_data_list: list[dict]):
     paths_list_filtered = _get_paths_common_to_all_models(loaded_data_list)
     
     filtered_loaded_data_list = []
