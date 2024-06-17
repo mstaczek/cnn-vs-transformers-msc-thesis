@@ -1,6 +1,7 @@
 import pandas as pd
 import torch.nn.functional as F
 from torch import exp
+from math import sqrt
 
 
 def compare_explanations(explanations_list: list[dict], comparison_function, compare_only_explanations_with_same_predictions=False):
@@ -37,9 +38,7 @@ def cosine_similarity(explanations_1, explanations_2):
         in: explanations_1, explanations_2 - torch.tensors of same dimensions, each row is an explanation
         out: cosine similarity of explanations_1 and explanations_2
     """
-    explanations_1_flattened = explanations_1.flatten(start_dim=1)
-    explanations_2_flattened = explanations_2.flatten(start_dim=1)
-    cosine_similarities = F.cosine_similarity(explanations_1_flattened, explanations_2_flattened, dim=1)
+    cosine_similarities = F.cosine_similarity(explanations_1.flatten(start_dim=1), explanations_2.flatten(start_dim=1), dim=1)
     return cosine_similarities.mean().item()
 
 def radial_basis_function(explanations_1, explanations_2, sigma=10):
@@ -47,11 +46,28 @@ def radial_basis_function(explanations_1, explanations_2, sigma=10):
         in: explanations_1, explanations_2 - torch.tensors of same dimensions, each row is an explanation
         out: radial basis function similarity of explanations_1 and explanations_2
     """
-    explanations_1_flattened = explanations_1.flatten(start_dim=1)
-    explanations_2_flattened = explanations_2.flatten(start_dim=1)
-    squared_distances = (explanations_1_flattened - explanations_2_flattened).pow(2).sum(dim=1)
+    squared_distances = (explanations_1.flatten(start_dim=1) - explanations_2.flatten(start_dim=1)).pow(2).sum(dim=1)
     rbf_similarities = exp(-0.5 * squared_distances / sigma**2)
     return rbf_similarities.mean().item()
+
+def cosine_similarity_distance_with_stdev_and_mean(explanations_1, explanations_2):
+    """
+        in: explanations_1, explanations_2 - torch.tensors of same dimensions, each row is an explanation
+        out: distance from (0,0) to (1-mean, stdev) of cosine similarities
+    """
+    cosine_similarities = F.cosine_similarity(explanations_1.flatten(start_dim=1), explanations_2.flatten(start_dim=1), dim=1)    
+    distance = sqrt((1 - cosine_similarities.mean().item())**2 + cosine_similarities.std().item()**2)
+    return distance
+
+def radial_basis_function_distance_with_stdev_and_mean(explanations_1, explanations_2, sigma=10):
+    """
+        in: explanations_1, explanations_2 - torch.tensors of same dimensions, each row is an explanation
+        out: distance from (0,0) to (1-mean, stdev) of RBF similarities
+    """
+    squared_distances = (explanations_1.flatten(start_dim=1) - explanations_2.flatten(start_dim=1)).pow(2).sum(dim=1)
+    rbf_similarities = exp(-0.5 * squared_distances / sigma**2)
+    distance = sqrt((1 - rbf_similarities.mean().item())**2 + rbf_similarities.std().item()**2)
+    return distance
 
 def count_same_predictions(explanations_list: list[dict]):
     """
