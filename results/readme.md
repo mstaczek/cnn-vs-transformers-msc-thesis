@@ -18,6 +18,7 @@ Here I document all experiments.
 - [20240531-accuracy-not-resized](#20240531-accuracy-not-resized)
 - [20240603-gradcam-512-histograms-clustering](#20240603-gradcam-512-histograms-clustering)
 - [20240613-sample-explanations-kernelshap-ig](#20240613-sample-explanations-kernelshap-ig)
+- [20240616-adding-stdev-to-metric](#20240616-adding-stdev-to-metric)
 
 ## 20240410-gradcam-256
 
@@ -363,3 +364,23 @@ Conclusions:
 - KernelSHAP with same mask can make little sense if a tiny part of the image matters (eg. dog).
 - Integrated Gradients sometimes are random for ViT/DeiT.
 - Visible differences in GradCAM explanations between models.
+
+## 20240616-adding-stdev-to-metric
+
+Goal: Instead of relying solely on mean of similarity metric, incorporate also standard deviation.
+
+Settings:
+- to this point: a mean of similarity metric was returned
+- new: return $\sqrt{(1-mean)^2 + stdev^2}$, which is a distance from (0,0) of a point with:
+  - X = 1 - mean similarity = dissimilarity
+  - Y = stdev of similarity
+
+Results:
+
+| Explanation | Histograms of values from models' similarity matrix|
+|---|---|
+| KernelSHAP | ![](20240616-adding-stdev-to-metric/histograms_KernelSHAP_8.png) |
+| Integrated Gradients | ![](20240616-adding-stdev-to-metric/histograms_IntegratedGradients_8.png) |
+| GradCAM | ![](20240616-adding-stdev-to-metric/histograms_GradCAM_512.png) |
+
+Conclusion: Values of metric are similar to each other for both cosine similarity and RBF similarity. Value 80 of scaling parameter for RBF works well for this case.
