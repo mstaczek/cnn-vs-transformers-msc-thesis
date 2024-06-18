@@ -19,6 +19,7 @@ Here I document all experiments.
 - [20240603-gradcam-512-histograms-clustering](#20240603-gradcam-512-histograms-clustering)
 - [20240613-sample-explanations-kernelshap-ig](#20240613-sample-explanations-kernelshap-ig)
 - [20240616-adding-stdev-to-metric](#20240616-adding-stdev-to-metric)
+- [20240618-visualizations](#20240618-visualizations)
 
 ## 20240410-gradcam-256
 
@@ -314,7 +315,7 @@ Settings: Gradcam for 512 images, all models, cosine and RBF similarity.
 
 Results:
 
-| Similarity metric | Hitograms |
+| Similarity metric | Histograms |
 |---|---|
 | Cosine | ![](20240603-gradcam-512-histograms-clustering/histograms_gradcam_cosine.png) |
 | RBF | ![](20240603-gradcam-512-histograms-clustering/histograms_gradcam_rbf.png) |
@@ -384,3 +385,39 @@ Results:
 | GradCAM | ![](20240616-adding-stdev-to-metric/histograms_GradCAM_512.png) |
 
 Conclusion: Values of metric are similar to each other for both cosine similarity and RBF similarity. Value 80 of scaling parameter for RBF works well for this case.
+
+## 20240618-visualizations
+
+
+### Part 1 - rerun GradCAM histograms
+
+Goal: rerun creating histograms of similarities between every pair of GradCAM explanations.
+
+Settings: Gradcam for 512 images, all models, cosine and RBF similarity after fixing computing similarities of a pair of images.
+
+Results:
+
+| Similarity metric | Histograms |
+|---|---|
+| Cosine | ![](20240618-visualizations/histograms_gradcam_cosine.png) |
+| RBF | ![](20240618-visualizations/histograms_gradcam_rbf.png) |
+
+No visible difference compared to the earlier version.
+
+### Part 2 - clustering
+
+Goal: for each csv (cosine and RBF similarity) create a hierachical clustering dendrogram, and graph community detection results.
+
+Settings: 
+
+- Analysis i sbased on the Part 1 of the experiment. 
+- Hierachical clustering has disabled colors in dendrograms. 
+- Graph community detection is based on the Louvain algorithm.
+
+Results:
+
+| Visualization method | Cosine | RBF|
+|---|---|---|
+| PCA | not used anymore | not used anymore |
+| Hierachical clustering | ![](20240618-visualizations/dendrogram_hierarchical_gradcam_cosine_all.png) |  ![](20240618-visualizations/dendrogram_hierarchical_gradcam_rbf_all.png) | 
+| Graph community detection | ![](20240618-visualizations/graph_louvain_gradcam_cosine_all.png) | ![](20240618-visualizations/graph_louvain_gradcam_rbf_all.png) |
