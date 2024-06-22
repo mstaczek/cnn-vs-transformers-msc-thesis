@@ -20,6 +20,7 @@ Here I document all experiments.
 - [20240613-sample-explanations-kernelshap-ig](#20240613-sample-explanations-kernelshap-ig)
 - [20240616-adding-stdev-to-metric](#20240616-adding-stdev-to-metric)
 - [20240618-visualizations](#20240618-visualizations)
+- [20240620-gradcam-kernelshap-ig-128](#20240620-gradcam-kernelshap-ig-128)
 
 ## 20240410-gradcam-256
 
@@ -421,3 +422,57 @@ Results:
 | PCA | not used anymore | not used anymore |
 | Hierachical clustering | ![](20240618-visualizations/dendrogram_hierarchical_gradcam_cosine_all.png) |  ![](20240618-visualizations/dendrogram_hierarchical_gradcam_rbf_all.png) | 
 | Graph community detection | ![](20240618-visualizations/graph_louvain_gradcam_cosine_all.png) | ![](20240618-visualizations/graph_louvain_gradcam_rbf_all.png) |
+
+## 20240620-gradcam-kernelshap-ig-128
+
+Goal: Compute explanations for 128 images for all models and all explanation methods. Create histograms of similarities, compute dissimilarity matrices, and try clustering with graph community detection and hierachical clustering.
+
+Settings:
+
+- 128 images from Imagenette2 dataset,
+- GradCAM, KernelSHAP, Integrated Gradients,
+- 50 segments and 350 samples for KernelSHAP,
+- 100 steps for Integrated Gradients,
+- results computed with no regard to the prediction of the models.
+
+Ran on Colab with T4 GPU, took a bit over 3h with batch size 32.
+
+Results:
+
+Histograms of similarities:
+- with Integrated Gradients and cosine similarity, histograms show values around 0 which means that images are not similar at all. 
+- with Integrated Gradients and RBF similarity, histograms look fine, in the range of 0.6-0.9.
+- other histograms look fine - with relatively high similarities.
+
+Dissimilarity matrices - scales differ depending on metric and explanation method, with no common conclusion.
+
+Clustering - After some manual tweaking of the parameter `resolution`, it is possible to match the coloring of the nodes to first/second split of the dendrogram
+
+#### Histograms of similarities:
+
+|  |  |  |
+|---|---|---|
+| GradCAM + cosine | KernelSHAP + cosine | Integrated Gradients + cosine |
+| ![](20240620-gradcam-kernelshap-ig-128/histograms_gradcam_cosine.png) | ![](20240620-gradcam-kernelshap-ig-128/histograms_kernelshap_cosine.png) | ![](20240620-gradcam-kernelshap-ig-128/histograms_integratedgradients_cosine.png) |
+| GradCAM + RBF | KernelSHAP + RBF | Integrated Gradients + RBF |
+| ![](20240620-gradcam-kernelshap-ig-128/histograms_gradcam_rbf.png) | ![](20240620-gradcam-kernelshap-ig-128/histograms_kernelshap_rbf.png) | ![](20240620-gradcam-kernelshap-ig-128/histograms_integratedgradients_rbf.png) |
+
+#### Dissimilarity matrices:
+
+|  |  |  |
+|---|---|---|
+| GradCAM + cosine | KernelSHAP + cosine | Integrated Gradients + cosine |
+| ![](20240620-gradcam-kernelshap-ig-128/heatmap_gradcam_cosine.png) | ![](20240620-gradcam-kernelshap-ig-128/heatmap_kernelshap_cosine.png) | ![](20240620-gradcam-kernelshap-ig-128/heatmap_integratedgradients_cosine.png) |
+| GradCAM + RBF | KernelSHAP + RBF | Integrated Gradients + RBF |
+| ![](20240620-gradcam-kernelshap-ig-128/heatmap_gradcam_rbf.png) | ![](20240620-gradcam-kernelshap-ig-128/heatmap_kernelshap_rbf.png) | ![](20240620-gradcam-kernelshap-ig-128/heatmap_integratedgradients_rbf.png) |
+
+#### Clustering:
+
+|  | Dendrogram | Graph Community Detection |
+|---|---|---|
+| GradCAM (Cosine) | ![](20240620-gradcam-kernelshap-ig-128/dendrogram_hierarchical_gradcam_cosine_all.png) | ![](20240620-gradcam-kernelshap-ig-128/graph_louvain_gradcam_cosine_all.png) |
+| GradCAM (RBF) | ![](20240620-gradcam-kernelshap-ig-128/dendrogram_hierarchical_gradcam_rbf_all.png) | ![](20240620-gradcam-kernelshap-ig-128/graph_louvain_gradcam_rbf_all.png) |
+| KernelSHAP (Cosine) | ![](20240620-gradcam-kernelshap-ig-128/dendrogram_hierarchical_kernelshap_cosine_all.png) | ![](20240620-gradcam-kernelshap-ig-128/graph_louvain_kernelshap_cosine_all.png) |
+| KernelSHAP (RBF) | ![](20240620-gradcam-kernelshap-ig-128/dendrogram_hierarchical_kernelshap_rbf_all.png) | ![](20240620-gradcam-kernelshap-ig-128/graph_louvain_kernelshap_rbf_all.png) |
+| Integrated Gradients (Cosine) | ![](20240620-gradcam-kernelshap-ig-128/dendrogram_hierarchical_integratedgradients_cosine_all.png) | ![](20240620-gradcam-kernelshap-ig-128/graph_louvain_integratedgradients_cosine_all.png) |
+| Integrated Gradients (RBF) | ![](20240620-gradcam-kernelshap-ig-128/dendrogram_hierarchical_integratedgradients_rbf_all.png) | ![](20240620-gradcam-kernelshap-ig-128/graph_louvain_integratedgradients_rbf_all.png) |
