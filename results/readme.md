@@ -21,6 +21,7 @@ Here I document all experiments.
 - [20240616-adding-stdev-to-metric](#20240616-adding-stdev-to-metric)
 - [20240618-visualizations](#20240618-visualizations)
 - [20240620-gradcam-kernelshap-ig-128](#20240620-gradcam-kernelshap-ig-128)
+- [20240704-integratedgradients-abs-value](#20240704-integratedgradients-abs-value)
 
 ## 20240410-gradcam-256
 
@@ -476,3 +477,24 @@ Clustering - After some manual tweaking of the parameter `resolution`, it is pos
 | KernelSHAP (RBF) | ![](20240620-gradcam-kernelshap-ig-128/dendrogram_hierarchical_kernelshap_rbf_all.png) | ![](20240620-gradcam-kernelshap-ig-128/graph_louvain_kernelshap_rbf_all.png) |
 | Integrated Gradients (Cosine) | ![](20240620-gradcam-kernelshap-ig-128/dendrogram_hierarchical_integratedgradients_cosine_all.png) | ![](20240620-gradcam-kernelshap-ig-128/graph_louvain_integratedgradients_cosine_all.png) |
 | Integrated Gradients (RBF) | ![](20240620-gradcam-kernelshap-ig-128/dendrogram_hierarchical_integratedgradients_rbf_all.png) | ![](20240620-gradcam-kernelshap-ig-128/graph_louvain_integratedgradients_rbf_all.png) |
+
+
+## 20240704-integratedgradients-abs-value
+
+Goal: Check results of Integrated Gradients after taking absolute values of the results.
+
+Setting: take last experiment IG results, load explanations from numpy, take absolute value, save their copies and recompute the plots.
+
+Results:
+
+<!-- 2 columns - before and after called IG and IG absolute values -->
+| Integrated Gradients | Integrated Gradients absolute values |
+|---|---|
+| ![](20240620-gradcam-kernelshap-ig-128/dendrogram_hierarchical_integratedgradients_cosine_all.png) | ![](20240704-integratedgradients-abs-value/dendrogram_hierarchical_integratedgradients_cosine_all.png) |
+| ![](20240620-gradcam-kernelshap-ig-128/dendrogram_hierarchical_integratedgradients_rbf_all.png) | ![](20240704-integratedgradients-abs-value/dendrogram_hierarchical_integratedgradients_rbf_all.png) |
+| ![](20240620-gradcam-kernelshap-ig-128/heatmap_integratedgradients_cosine.png) | ![](20240704-integratedgradients-abs-value/heatmap_integratedgradients_cosine.png) |
+| ![](20240620-gradcam-kernelshap-ig-128/heatmap_integratedgradients_rbf.png) | ![](20240704-integratedgradients-abs-value/heatmap_integratedgradients_rbf.png) |
+| ![](20240620-gradcam-kernelshap-ig-128/histograms_integratedgradients_cosine.png) | ![](20240704-integratedgradients-abs-value/histograms_integratedgradients_cosine.png) |
+| ![](20240620-gradcam-kernelshap-ig-128/histograms_integratedgradients_rbf.png) | ![](20240704-integratedgradients-abs-value/histograms_integratedgradients_rbf.png) |
+
+Conclusion: Explanations are less dissimilar meaning that they are more similar, which was to be expected as everything is non-negative now. Dendrogram for cosine is the same, for RBF differs. Histograms of similarities have moved to be more positive, and dissimilarity heatmaps have lower values.
