@@ -22,6 +22,7 @@ Here I document all experiments.
 - [20240618-visualizations](#20240618-visualizations)
 - [20240620-gradcam-kernelshap-ig-128](#20240620-gradcam-kernelshap-ig-128)
 - [20240704-integratedgradients-abs-value](#20240704-integratedgradients-abs-value)
+- [20240716-visualizations-of-explanations](#20240716-visualizations-of-explanations)
 
 ## 20240410-gradcam-256
 
@@ -498,3 +499,20 @@ Results:
 | ![](20240620-gradcam-kernelshap-ig-128/histograms_integratedgradients_rbf.png) | ![](20240704-integratedgradients-abs-value/histograms_integratedgradients_rbf.png) |
 
 Conclusion: Explanations are less dissimilar meaning that they are more similar, which was to be expected as everything is non-negative now. Dendrogram for cosine is the same, for RBF differs. Histograms of similarities have moved to be more positive, and dissimilarity heatmaps have lower values.
+
+# 20240716-visualizations-of-explanations
+
+Goal: Visualize explanations again, for more images. Visual tweaks.
+
+Settings: Utilize explanations computed in [20240620-gradcam-kernelshap-ig-128](#20240620-gradcam-kernelshap-ig-128) and visualize them.
+
+Results:
+
+Here are a few images with explanations for all models and all explanation methods:
+
+
+| Sample image 1 | Sample image 2 | Sample image 3 | Sample image 4 |
+|---|---|---|--|
+| ![](20240716-visualizations-of-explanations/selected/explanations_n02102040_2644.png) | ![](20240716-visualizations-of-explanations/selected/explanations_n03000684_565.png) | ![](20240716-visualizations-of-explanations/selected/explanations_n03425413_2076.png) | ![](20240716-visualizations-of-explanations/selected/explanations_n03888257_21399.png) |
+
+Rest of the comparisons, for 60 more images, in the `20240716-visualizations-of-explanations/selected` folder.
