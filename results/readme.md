@@ -23,6 +23,7 @@ Here I document all experiments.
 - [20240620-gradcam-kernelshap-ig-128](#20240620-gradcam-kernelshap-ig-128)
 - [20240704-integratedgradients-abs-value](#20240704-integratedgradients-abs-value)
 - [20240716-visualizations-of-explanations](#20240716-visualizations-of-explanations)
+- [20240806-influence-of-images-count](#20240806-influence-of-images-count)
 
 ## 20240410-gradcam-256
 
@@ -516,3 +517,19 @@ Here are a few images with explanations for all models and all explanation metho
 | ![](20240716-visualizations-of-explanations/selected/explanations_n02102040_2644.png) | ![](20240716-visualizations-of-explanations/selected/explanations_n03000684_565.png) | ![](20240716-visualizations-of-explanations/selected/explanations_n03425413_2076.png) | ![](20240716-visualizations-of-explanations/selected/explanations_n03888257_21399.png) |
 
 Rest of the comparisons, for 60 more images, in the `20240716-visualizations-of-explanations/selected` folder.
+
+## 20240806-influence-of-images-count
+
+Goal: Plots comparing dissimilarity matrices computed for different number of analyzed images.
+
+Settings: take Grad-CAM explanations from [20240806-influence-of-images-count](#20240620-gradcam-kernelshap-ig-128) and compute dissimilarity matrices for different numbers of images. Randomly sample n images 25 times, compute dissimilarity matrices for each of the subsets of n images out of 1024 total images. Then:
+
+- compute sum of abs of differences cell by cell between dissimilarity matrices for n images and 1024 images, sums put to a boxplot,
+- for each n, compute variance of values from each cell in the dissimilarity matrix and put them all in a single boxplot.
+
+Results:
+
+| Sum of abs differences | Variance of values |
+|---|---|
+| ![](20240806-influence-of-images-count/sum_difference_boxplot_gradcam_cosine.png) | ![](20240806-influence-of-images-count/variance_boxplot_gradcam_cosine.png) |
+| ![](20240806-influence-of-images-count/sum_difference_boxplot_gradcam_rbf.png) | ![](20240806-influence-of-images-count/variance_boxplot_gradcam_rbf.png) |
