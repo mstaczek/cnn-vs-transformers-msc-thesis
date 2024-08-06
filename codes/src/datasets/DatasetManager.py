@@ -33,13 +33,13 @@ class NpyFolderWithPathsAndPredictions(NpyFolderWithPaths):
             with open(txt_path, 'r') as f:
                 model_prediction = f.read()
         else:
-            model_prediction = None
+            model_prediction = -1
         return model_prediction
 
     def __getitem__(self, index):
         sample, target, path = super(NpyFolderWithPathsAndPredictions, self).__getitem__(index)
         model_prediction_class_name = self._load_models_prediction(path)
-        model_prediction_class_id = self.classes_to_id_mapping[model_prediction_class_name]
+        model_prediction_class_id = self.classes_to_id_mapping[model_prediction_class_name] if model_prediction_class_name in self.classes_to_id_mapping else -1
         return sample, target, model_prediction_class_id, path
 
 class DatasetManager:
