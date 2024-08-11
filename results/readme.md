@@ -24,6 +24,7 @@ Here I document all experiments.
 - [20240704-integratedgradients-abs-value](#20240704-integratedgradients-abs-value)
 - [20240716-visualizations-of-explanations](#20240716-visualizations-of-explanations)
 - [20240806-influence-of-images-count](#20240806-influence-of-images-count)
+- [20240809-deeper-explanations](#20240809-deeper-explanations)
 
 ## 20240410-gradcam-256
 
@@ -533,3 +534,34 @@ Results:
 |---|---|
 | ![](20240806-influence-of-images-count/sum_difference_boxplot_gradcam_cosine.png) | ![](20240806-influence-of-images-count/variance_boxplot_gradcam_cosine.png) |
 | ![](20240806-influence-of-images-count/sum_difference_boxplot_gradcam_rbf.png) | ![](20240806-influence-of-images-count/variance_boxplot_gradcam_rbf.png) |
+
+
+## 20240809-deeper-explanations
+
+Goal: Visualize model's behavior on a single image but at different moments with Grad-CAM.
+
+Setting:
+- take 5 models: 
+  - DeiT_S, 
+  - Swin_T, 
+  - ResNet18, 
+  - ConvNeXtV2_Nano, 
+  - PyramidViT_V2_B2
+- show:
+  - original image
+  - Integrated Gradients explanation - at the input
+  - Grad-CAM explanation - at 25%, 
+  - Grad-CAM explanation - at 50%, 
+  - Grad-CAM explanation - at 75%, 
+  - Grad-CAM explanation - at 100% of the model's depth
+  - KernelSHAP explanation - at the output
+
+Results:
+
+10 images can be found in the `20240809-deeper-explanations` folder. Here are 4 of them:
+
+| All predictions correct | Not all predictions correct |
+|---|---|
+| ![](20240809-deeper-explanations/explanations_all-correct_n03394916_22083.png) | ![](20240809-deeper-explanations/explanations_not-all-correct_n03000684_8464.png) |
+|---|---|
+| ![](20240809-deeper-explanations/explanations_all-correct_n03888257_14974.png) | ![](20240809-deeper-explanations/explanations_not-all-correct_n01440764_5966.png) |
