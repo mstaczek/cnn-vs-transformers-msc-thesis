@@ -25,6 +25,7 @@ Here I document all experiments.
 - [20240716-visualizations-of-explanations](#20240716-visualizations-of-explanations)
 - [20240806-influence-of-images-count](#20240806-influence-of-images-count)
 - [20240809-deeper-explanations](#20240809-deeper-explanations)
+- [20240831-update-hierarchical-clust-metric](#20240831-update-hierarchical-clust-metric)
 
 ## 20240410-gradcam-256
 
@@ -565,3 +566,44 @@ Results:
 | ![](20240809-deeper-explanations/explanations_all-correct_n03394916_22083.png) | ![](20240809-deeper-explanations/explanations_not-all-correct_n03000684_8464.png) |
 |---|---|
 | ![](20240809-deeper-explanations/explanations_all-correct_n03888257_14974.png) | ![](20240809-deeper-explanations/explanations_not-all-correct_n01440764_5966.png) |
+
+
+## 20240831-update-hierarchical-clust-metric
+
+Goal: change ward linkage to sth else. Compare different linkage in hierarchical clustering
+
+Setting: According to docs https://docs.scipy.org/doc/scipy/reference/generated/scipy.cluster.hierarchy.linkage.html: 
+
+> Methods ‘centroid’, ‘median’, and ‘ward’ are correctly defined only if Euclidean pairwise metric is used. If y is passed as precomputed pairwise distances, then it is the user’s responsibility to assure that these distances are in fact Euclidean, otherwise the produced result will be incorrect.
+
+Tested linkage variants:
+- simple (min)
+- complete (max)
+- average (average)
+- weighted (with respect to others others)
+
+Detailed descriptions are in the documentation linked above.
+
+Results:
+
+| Average | Complete | Single | Weighted | Previous Dendrograms |
+|---|---|---|---|---|
+| ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_average_gradcam_cosine_all.png) | ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_complete_gradcam_cosine_all.png) | ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_single_gradcam_cosine_all.png) | ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_weighted_gradcam_cosine_all.png) | ![](20240620-gradcam-kernelshap-ig-128/dendrogram_hierarchical_gradcam_cosine_all.png) |
+| ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_average_gradcam_rbf_all.png) | ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_complete_gradcam_rbf_all.png) | ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_single_gradcam_rbf_all.png) | ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_weighted_gradcam_rbf_all.png) | ![](20240620-gradcam-kernelshap-ig-128/dendrogram_hierarchical_gradcam_rbf_all.png) |
+| ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_average_integratedgradients_cosine_all.png) | ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_complete_integratedgradients_cosine_all.png) | ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_single_integratedgradients_cosine_all.png) | ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_weighted_integratedgradients_cosine_all.png) | ![](20240620-gradcam-kernelshap-ig-128/dendrogram_hierarchical_integratedgradients_cosine_all.png) |
+| ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_average_integratedgradients_rbf_all.png) | ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_complete_integratedgradients_rbf_all.png) | ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_single_integratedgradients_rbf_all.png) | ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_weighted_integratedgradients_rbf_all.png) | ![](20240620-gradcam-kernelshap-ig-128/dendrogram_hierarchical_integratedgradients_rbf_all.png) |
+| ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_average_kernelshap_cosine_all.png) | ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_complete_kernelshap_cosine_all.png) | ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_single_kernelshap_cosine_all.png) | ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_weighted_kernelshap_cosine_all.png) | ![](20240620-gradcam-kernelshap-ig-128/dendrogram_hierarchical_kernelshap_cosine_all.png) |
+| ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_average_kernelshap_rbf_all.png) | ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_complete_kernelshap_rbf_all.png) | ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_single_kernelshap_rbf_all.png) | ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_weighted_kernelshap_rbf_all.png) | ![](20240620-gradcam-kernelshap-ig-128/dendrogram_hierarchical_kernelshap_rbf_all.png) |
+
+
+Overall, all dendrograms seem random, with little similarities between them. 
+- complete and ward (previously used) are most similar to each other -- probably incorrect,
+- default is single -- no reason against using it,
+- complete (max) is strange to think about it, min or avg sounds more reasonable,
+- complete, ward and weighted are similar,
+- average and single are similar.
+
+Distance is given by the dissimilarity matrix:
+- IF clusters were present, single linkage (taking min of distances between models in clusters) would work great except there aren't -> it's fine.
+
+Conclusion: use average -- a bit more complicated than single but seems to make more sense? 
