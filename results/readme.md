@@ -26,6 +26,7 @@ Here I document all experiments.
 - [20240806-influence-of-images-count](#20240806-influence-of-images-count)
 - [20240809-deeper-explanations](#20240809-deeper-explanations)
 - [20240831-update-hierarchical-clust-metric](#20240831-update-hierarchical-clust-metric)
+- [20240903-count-different-pairs](#20240903-count-different-pairs)
 
 ## 20240410-gradcam-256
 
@@ -503,7 +504,7 @@ Results:
 
 Conclusion: Explanations are less dissimilar meaning that they are more similar, which was to be expected as everything is non-negative now. Dendrogram for cosine is the same, for RBF differs. Histograms of similarities have moved to be more positive, and dissimilarity heatmaps have lower values.
 
-# 20240716-visualizations-of-explanations
+## 20240716-visualizations-of-explanations
 
 Goal: Visualize explanations again, for more images. Visual tweaks.
 
@@ -607,3 +608,14 @@ Distance is given by the dissimilarity matrix:
 - IF clusters were present, single linkage (taking min of distances between models in clusters) would work great except there aren't -> it's fine.
 
 Conclusion: use average -- a bit more complicated than single but seems to make more sense? 
+
+
+## 20240903-count-different-pairs
+
+Goal: count how many pairs were compared in which the models have classified the image into different classes.
+
+Settings: use 128 images from [20240620-gradcam-kernelshap-ig-128](#20240620-gradcam-kernelshap-ig-128).
+
+Result:
+- same class: 10207
+- different class: 1441
