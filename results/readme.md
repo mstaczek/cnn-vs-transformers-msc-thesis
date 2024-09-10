@@ -27,6 +27,7 @@ Here I document all experiments.
 - [20240809-deeper-explanations](#20240809-deeper-explanations)
 - [20240831-update-hierarchical-clust-metric](#20240831-update-hierarchical-clust-metric)
 - [20240903-count-different-pairs](#20240903-count-different-pairs)
+- [20240910-drawio-diagram-explanation-methods](#20240910-drawio-diagram-explanation-methods)
 
 ## 20240410-gradcam-256
 
@@ -619,3 +620,11 @@ Settings: use 128 images from [20240620-gradcam-kernelshap-ig-128](#20240620-gra
 Result:
 - same class: 10207
 - different class: 1441
+
+## 20240910-drawio-diagram-explanation-methods
+
+Goal: visualize at which parts of an image classification model do different explanation methods look at.
+
+Result:
+
+![](20240910-drawio-diagram-explanation-methods/explanation_methods_diagram.png)
