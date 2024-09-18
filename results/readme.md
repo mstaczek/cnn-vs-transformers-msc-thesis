@@ -28,6 +28,7 @@ Here I document all experiments.
 - [20240831-update-hierarchical-clust-metric](#20240831-update-hierarchical-clust-metric)
 - [20240903-count-different-pairs](#20240903-count-different-pairs)
 - [20240910-drawio-diagram-explanation-methods](#20240910-drawio-diagram-explanation-methods)
+- [20240918-image-inpaining-example-fish](#20240918-image-inpaining-example-fish)
 
 ## 20240410-gradcam-256
 
@@ -628,3 +629,24 @@ Goal: visualize at which parts of an image classification model do different exp
 Result:
 
 ![](20240910-drawio-diagram-explanation-methods/explanation_methods_diagram.png)
+
+## 20240918-image-inpaining-example-fish
+
+Goal: mask fish in an image of a man with a fish and check model predictions
+
+Result:
+
+| Original image | Image with masked fish |
+|----------|----------|
+| ![](20240918-image-inpaining-example-fish/n01440764_1185.jpg)        | ![](20240918-image-inpaining-example-fish/n01440764_1185_modified.png)        |
+| ![](20240918-image-inpaining-example-fish/explanations_n01440764_1185.png)        | ![](20240918-image-inpaining-example-fish/explanations_n01440764_1185_modified_not_all_correct.png) |
+
+
+- for original image 
+  - all models were correct
+  - all classified an image to class `tench` (in Polish: `lin`)
+  - explanations were mostly ok, but for KernelSHAP and Integrated Gradients they were not that clear 
+- for image without fish 
+  - all models were wrong
+  - BUT models classified it as other types of fish: `barracouta` or `coho` (in Polish: ~`makrela` or ~`łosoś`)
+  - explanations were not focused on any particular part of an image, but Integrated Gradients often highlighted the shape of the person.
