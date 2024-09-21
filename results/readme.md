@@ -650,3 +650,13 @@ Result:
   - all models were wrong
   - BUT models classified it as other types of fish: `barracouta` or `coho` (in Polish: ~`makrela` or ~`łosoś`)
   - explanations were not focused on any particular part of an image, but Integrated Gradients often highlighted the shape of the person.
+
+More result:
+
+| Original image | Image with masked fish |
+|----------|----------|
+| ![](20240918-image-inpaining-example-fish/explanations_n01440764_1185-v2.png)        | ![](20240918-image-inpaining-example-fish/explanations_n01440764_1185_modified_not_all_correct-v2.png) |
+
+Results after:
+- abs for Integrated Gradients (used)
+- changed scale for KernelSHAP (temporary) - changed scaling results from `0 - 1` to `-1 - 1` (with only 1 end reached)
