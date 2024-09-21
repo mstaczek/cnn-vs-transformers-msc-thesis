@@ -34,7 +34,7 @@ class ExplanationKernelSHAP(Explanation):
             attr_list.append(attr)
         attributions = torch.concat(attr_list)
         results = attributions.cpu().detach().numpy().sum(axis=1)
-        explanations = (results - np.min(results)) / (np.max(results) - np.min(results))
+        explanations = results / np.max(np.array(np.max(results), np.max(-results)))
         return explanations
 
     def _update_explanation_method(self, model: Model):        
