@@ -23,6 +23,7 @@ class ExplanationIntegratedGradients(Explanation):
             explanations[i, explanations[i] > high_percentile] = high_percentile
             explanations[i, explanations[i] < low_percentile] = low_percentile
             explanations[i] = explanations[i] / np.max(np.abs(explanations[i]))
+        explanations = np.abs(explanations)
         return explanations
 
     def _update_explanation_method(self, model: Model):        
