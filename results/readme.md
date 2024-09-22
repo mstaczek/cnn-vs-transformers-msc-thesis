@@ -29,6 +29,7 @@ Here I document all experiments.
 - [20240903-count-different-pairs](#20240903-count-different-pairs)
 - [20240910-drawio-diagram-explanation-methods](#20240910-drawio-diagram-explanation-methods)
 - [20240918-image-inpaining-example-fish](#20240918-image-inpaining-example-fish)
+- [20240922-recompute-kernelshap-128](#20240922-recompute-kernelshap-128)
 
 ## 20240410-gradcam-256
 
@@ -660,3 +661,44 @@ More result:
 Results after:
 - abs for Integrated Gradients (used)
 - changed scale for KernelSHAP (temporary) - changed scaling results from `0 - 1` to `-1 - 1` (with only 1 end reached)
+
+## 20240922-recompute-kernelshap-128
+
+Goal: Recompute explanations for KernelSHAP - updated saving explanations to scale them in such a way that 0 stays at 0, and min or max is -1 or 1. 
+
+Same settings as for [20240620-gradcam-kernelshap-ig-128](#20240620-gradcam-kernelshap-ig-128).
+
+KernelSHAP hierarchical clustering results from before are from [20240831-update-hierarchical-clust-metric](#20240831-update-hierarchical-clust-metric).
+
+Results:
+
+Ran on my laptop, took a bit over 7h with batch size 2.
+
+- Histograms of are much less similar - before, most values were around or above 0.5, but below 1. Now, they are ranged from -1 to 1 with most around 0, so the spread is wider which reduces the similarities.
+
+- Dissimilarity matrices - slightly different, with similar patterns for both cosine and RBF similarities.
+
+- Clustering - hierarchical clustering has changed drastically from a nice splitting into a sequential building of a single cluster. Community detection did not change much - it still is independent of models' architectures.
+
+#### Histograms of similarities:
+
+| KernelSHAP before | KernelSHAP after |
+|---|---|
+| ![](20240620-gradcam-kernelshap-ig-128/histograms_kernelshap_cosine.png) | ![](20240922-recompute-kernelshap-128/histograms_kernelshap_cosine.png) |
+| ![](20240620-gradcam-kernelshap-ig-128/histograms_kernelshap_rbf.png) | ![](20240922-recompute-kernelshap-128/histograms_kernelshap_rbf.png) |
+
+#### Dissimilarity matrices:
+
+| KernelSHAP before | KernelSHAP after |
+|---|---|
+| ![](20240620-gradcam-kernelshap-ig-128/heatmap_kernelshap_cosine.png) | ![](20240922-recompute-kernelshap-128/heatmap_kernelshap_cosine.png) |
+| ![](20240620-gradcam-kernelshap-ig-128/heatmap_kernelshap_rbf.png) | ![](20240922-recompute-kernelshap-128/heatmap_kernelshap_rbf.png) |
+
+#### Clustering:
+
+| KernelSHAP | Dendrogram | Graph Community Detection |
+|---|---|---|
+| Before (Cosine) | ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_average_kernelshap_cosine_all.png) | ![](20240620-gradcam-kernelshap-ig-128/graph_louvain_kernelshap_cosine_all.png) |
+| After (Cosine) | ![](20240922-recompute-kernelshap-128/dendrogram_hierarchical_kernelshap_cosine_all.png) | ![](20240922-recompute-kernelshap-128/graph_louvain_kernelshap_cosine_all.png) |
+| Before (RBF) | ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_average_kernelshap_rbf_all.png) | ![](20240620-gradcam-kernelshap-ig-128/graph_louvain_kernelshap_rbf_all.png) |
+| After (RBF) | ![](20240922-recompute-kernelshap-128/dendrogram_hierarchical_kernelshap_rbf_all.png) | ![](20240922-recompute-kernelshap-128/graph_louvain_kernelshap_rbf_all.png) |
