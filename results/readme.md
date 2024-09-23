@@ -522,7 +522,7 @@ Here are a few images with explanations for all models and all explanation metho
 |---|---|---|--|
 | ![](20240716-visualizations-of-explanations/selected/explanations_n02102040_2644.png) | ![](20240716-visualizations-of-explanations/selected/explanations_n03000684_565.png) | ![](20240716-visualizations-of-explanations/selected/explanations_n03425413_2076.png) | ![](20240716-visualizations-of-explanations/selected/explanations_n03888257_21399.png) |
 
-Rest of the comparisons, for 60 more images, in the `20240716-visualizations-of-explanations/selected` folder.
+2 more explanations are saved in the `20240716-visualizations-of-explanations/selected` folder.
 
 ## 20240806-influence-of-images-count
 
@@ -702,3 +702,23 @@ Ran on my laptop, took a bit over 7h with batch size 2.
 | After (Cosine) | ![](20240922-recompute-kernelshap-128/dendrogram_hierarchical_kernelshap_cosine_all.png) | ![](20240922-recompute-kernelshap-128/graph_louvain_kernelshap_cosine_all.png) |
 | Before (RBF) | ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_average_kernelshap_rbf_all.png) | ![](20240620-gradcam-kernelshap-ig-128/graph_louvain_kernelshap_rbf_all.png) |
 | After (RBF) | ![](20240922-recompute-kernelshap-128/dendrogram_hierarchical_kernelshap_rbf_all.png) | ![](20240922-recompute-kernelshap-128/graph_louvain_kernelshap_rbf_all.png) |
+
+## 20240922-visuzalize-explanations-one-more
+
+Goal: Rerun [20240716-visualizations-of-explanations](#20240716-visualizations-of-explanations)
+
+Settings: Utilize explanations computed in:
+- Grad-CAM [20240620-gradcam-kernelshap-ig-128](#20240620-gradcam-kernelshap-ig-128)
+- KernelSHAP [20240922-recompute-kernelshap-128](#20240922-recompute-kernelshap-128)
+- Integrated Gradients [20240704-integratedgradients-abs-value](#20240704-integratedgradients-abs-value)
+
+Results:
+
+Here are a few images with explanations for all models and all explanation methods:
+
+
+| Sample image 1 | Sample image 2 | Sample image 3 | Sample image 4 |
+|---|---|---|--|
+| ![](20240922-visuzalize-explanations-one-more/selected/explanations_n02102040_2644.png) | ![](20240922-visuzalize-explanations-one-more/selected/explanations_n03000684_565.png) | ![](20240922-visuzalize-explanations-one-more/selected/explanations_n03425413_2076.png) | ![](20240922-visuzalize-explanations-one-more/selected/explanations_n03888257_21399.png) |
+
+2 more images are in the `20240716-visualizations-of-explanations/selected` folder.
