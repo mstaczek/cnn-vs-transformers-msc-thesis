@@ -30,6 +30,8 @@ Here I document all experiments.
 - [20240910-drawio-diagram-explanation-methods](#20240910-drawio-diagram-explanation-methods)
 - [20240918-image-inpaining-example-fish](#20240918-image-inpaining-example-fish)
 - [20240922-recompute-kernelshap-128](#20240922-recompute-kernelshap-128)
+- [20240922-visuzalize-explanations-one-more](#20240922-visuzalize-explanations-one-more)
+- [20240923-deeper-explanations-rerun](#20240923-deeper-explanations-rerun)
 
 ## 20240410-gradcam-256
 
@@ -722,3 +724,33 @@ Here are a few images with explanations for all models and all explanation metho
 | ![](20240922-visuzalize-explanations-one-more/selected/explanations_n02102040_2644.png) | ![](20240922-visuzalize-explanations-one-more/selected/explanations_n03000684_565.png) | ![](20240922-visuzalize-explanations-one-more/selected/explanations_n03425413_2076.png) | ![](20240922-visuzalize-explanations-one-more/selected/explanations_n03888257_21399.png) |
 
 2 more images are in the `20240716-visualizations-of-explanations/selected` folder.
+
+## 20240923-deeper-explanations-rerun
+
+Goal: update plots from [20240809-deeper-explanations](#20240809-deeper-explanations) but with KernelSHAP that is visualized with positive and negative explanations.
+
+Settings - same as earlier:
+- take 5 models: 
+  - DeiT_S, 
+  - Swin_T, 
+  - ResNet18, 
+  - ConvNeXtV2_Nano, 
+  - PyramidViT_V2_B2
+- show:
+  - original image
+  - Integrated Gradients explanation - at the input
+  - Grad-CAM explanation - at 25%, 
+  - Grad-CAM explanation - at 50%, 
+  - Grad-CAM explanation - at 75%, 
+  - Grad-CAM explanation - at 100% of the model's depth
+  - KernelSHAP explanation - at the output
+
+Results:
+
+10 images can be found in the `20240923-deeper-explanations-rerun` folder. Here are 4 of them:
+
+| All predictions correct | Not all predictions correct |
+|---|---|
+| ![](20240923-deeper-explanations-rerun/explanations_all-correct_n03394916_22083.png) | ![](20240923-deeper-explanations-rerun/explanations_not-all-correct_n03000684_8464.png) |
+|---|---|
+| ![](20240923-deeper-explanations-rerun/explanations_all-correct_n03888257_14974.png) | ![](20240923-deeper-explanations-rerun/explanations_not-all-correct_n01440764_5966.png) |
