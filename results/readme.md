@@ -32,6 +32,7 @@ Here I document all experiments.
 - [20240922-recompute-kernelshap-128](#20240922-recompute-kernelshap-128)
 - [20240922-visuzalize-explanations-one-more](#20240922-visuzalize-explanations-one-more)
 - [20240923-deeper-explanations-rerun](#20240923-deeper-explanations-rerun)
+- [20240928-diagrams-of-pipeline](#20240928-diagrams-of-pipeline)
 
 ## 20240410-gradcam-256
 
@@ -754,3 +755,11 @@ Results:
 | ![](20240923-deeper-explanations-rerun/explanations_all-correct_n03394916_22083.png) | ![](20240923-deeper-explanations-rerun/explanations_not-all-correct_n03000684_8464.png) |
 |---|---|
 | ![](20240923-deeper-explanations-rerun/explanations_all-correct_n03888257_14974.png) | ![](20240923-deeper-explanations-rerun/explanations_not-all-correct_n01440764_5966.png) |
+
+
+## 20240928-diagrams-of-pipeline
+
+Goal: visualize processing pipeline.
+
+![](20240928-diagrams-of-pipeline/pipeline_1_exp_method.png)
+![](20240928-diagrams-of-pipeline/pipeline_2_aggregate_A_B.png)
