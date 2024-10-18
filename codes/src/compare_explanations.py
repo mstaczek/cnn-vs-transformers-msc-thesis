@@ -1,3 +1,4 @@
+from sklearn.metrics import cohen_kappa_score
 import pandas as pd
 import torch.nn.functional as F
 from torch import exp
@@ -90,3 +91,13 @@ def count_same_predictions(explanations_list: list[dict]):
             count_of_same_predictions_df.loc[model_j, model_i] = count_of_same_predictions
     
     return count_of_same_predictions_df
+
+def cohens_kappa_metric(explanations_1, explanations_2, threshold=0.5):
+    """
+        in: explanations_1, explanations_2 - torch.tensors of same dimensions, each row is an explanation
+        out: cohen_kappa_score of explanations_1 and explanations_2
+    """
+    binary_flattened_1 = (explanations_1.flatten() > threshold).float()  # Convert True/False to 1/0
+    binary_flattened_2 = (explanations_2.flatten() > threshold).float() 
+    result = cohen_kappa_score(binary_flattened_1, binary_flattened_2)
+    return result

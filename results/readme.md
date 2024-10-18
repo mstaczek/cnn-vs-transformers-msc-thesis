@@ -33,6 +33,7 @@ Here I document all experiments.
 - [20240922-visuzalize-explanations-one-more](#20240922-visuzalize-explanations-one-more)
 - [20240923-deeper-explanations-rerun](#20240923-deeper-explanations-rerun)
 - [20240928-diagrams-of-pipeline](#20240928-diagrams-of-pipeline)
+- [20241018-statistics-metrics](#20241018-statistics-metrics)
 
 ## 20240410-gradcam-256
 
@@ -763,3 +764,25 @@ Goal: visualize processing pipeline.
 
 ![](20240928-diagrams-of-pipeline/pipeline_1_exp_method.png)
 ![](20240928-diagrams-of-pipeline/pipeline_2_aggregate_A_B.png)
+
+
+## 20241018-statistics-metrics
+
+Goal: use Cohen's kappa score. Use as edge weigths or distances in clustering, as earlier.
+
+Setting: 
+- use Cohen's kappa score from [scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.cohen_kappa_score.html)
+- Grad-CAM explanations only.
+
+Results:
+
+Below, 2 columns show results now (left) and earlier (right) for Grad-CAM explanation method.
+
+| Cohen's kappa | Cosine similarity|
+|---|---|
+| ![](20241018-statistics-metrics/heatmap_gradcam_cohens_kappa.png) | ![](20240620-gradcam-kernelshap-ig-128/heatmap_gradcam_cosine.png) |
+| ![](20241018-statistics-metrics/dendrogram_hierarchical_gradcam_cohens_kappa.png) | ![](20240831-update-hierarchical-clust-metric/dendrogram_hierarchical_average_gradcam_cosine_all.png) |
+| ![](20241018-statistics-metrics/graph_louvain_gradcam_cohens_kappa.png) | ![](20240620-gradcam-kernelshap-ig-128/graph_louvain_gradcam_cosine_all.png) |
+
+Conclusions: Heatmap and dendrogram are similar to earlier.
+
