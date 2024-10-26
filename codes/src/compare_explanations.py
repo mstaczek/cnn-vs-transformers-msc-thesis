@@ -2,6 +2,7 @@ from sklearn.metrics import cohen_kappa_score
 import pandas as pd
 import torch.nn.functional as F
 from torch import exp
+import torch
 from math import sqrt
 
 
@@ -92,12 +93,18 @@ def count_same_predictions(explanations_list: list[dict]):
     
     return count_of_same_predictions_df
 
-def cohens_kappa_metric(explanations_1, explanations_2, threshold=0.5):
+def _count_greater_how_many_thresholds(vector, thresholds):
+    counter_vector = torch.zeros_like(vector)
+    for t in thresholds:
+        counter_vector += (vector > t).float()
+    return counter_vector
+
+def cohens_kappa_metric(explanations_1, explanations_2, thresholds=[0.5]):
     """
         in: explanations_1, explanations_2 - torch.tensors of same dimensions, each row is an explanation
         out: cohen_kappa_score of explanations_1 and explanations_2
     """
-    binary_flattened_1 = (explanations_1.flatten() > threshold).float()  # Convert True/False to 1/0
-    binary_flattened_2 = (explanations_2.flatten() > threshold).float() 
+    binary_flattened_1 = _count_greater_how_many_thresholds(explanations_1.flatten(), thresholds)
+    binary_flattened_2 = _count_greater_how_many_thresholds(explanations_2.flatten(), thresholds)
     result = cohen_kappa_score(binary_flattened_1, binary_flattened_2)
     return result

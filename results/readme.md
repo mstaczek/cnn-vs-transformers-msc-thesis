@@ -34,6 +34,7 @@ Here I document all experiments.
 - [20240923-deeper-explanations-rerun](#20240923-deeper-explanations-rerun)
 - [20240928-diagrams-of-pipeline](#20240928-diagrams-of-pipeline)
 - [20241018-statistics-metrics](#20241018-statistics-metrics)
+- [20241026-statistics-metrics-2](#20241026-statistics-metrics-2)
 
 ## 20240410-gradcam-256
 
@@ -787,3 +788,20 @@ Below, 2 columns show results now (left) and earlier (right) for Grad-CAM explan
 
 Conclusions: Heatmap and dendrogram are similar to earlier.
 
+## 20241026-statistics-metrics-2
+
+Goal: check Cohen's kappa as before but with 3 classes instead of just 2.
+
+Setting:
+- same as before,
+- thresholds: 0.4 and 0.7 (previously, there was only threshold 0.5).
+
+Results:
+
+|2 classes|3 classes|
+|---|---|
+| ![](20241018-statistics-metrics/heatmap_gradcam_cohens_kappa.png) | ![](20241026-statistics-metrics-2/heatmap_gradcam_cohens_kappa.png) |
+| ![](20241018-statistics-metrics/dendrogram_hierarchical_gradcam_cohens_kappa.png) | ![](20241026-statistics-metrics-2/dendrogram_hierarchical_gradcam_cohens_kappa.png) |
+| ![](20241018-statistics-metrics/graph_louvain_gradcam_cohens_kappa.png) | ![](20241026-statistics-metrics-2/graph_louvain_gradcam_cohens_kappa.png) |
+
+Conclusions: Results are similar to those obtained for 2 classes. Dendrograms are nearly identical except for the change of order the models are listed (but the merges itself are almost the same).
