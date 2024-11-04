@@ -1,6 +1,6 @@
 from src.datasets import Imagenette2Manager
 from src.models import *
-from src.explanations import ExplanationGradCAM, ExplanationKernelSHAP, ExplanationIntegratedGradients
+from src.explanations import ExplanationGradCAM, ExplanationKernelSHAP, ExplanationIntegratedGradients, ExplanationAttentionRollout
 
 datasets_mapping = {
     'imagenette2' : Imagenette2Manager,
@@ -26,5 +26,6 @@ models_mapping = {
 explanations_mapping = {
     'GradCAM' : ExplanationGradCAM,
     'IntegratedGradients' : ExplanationIntegratedGradients,
-    'KernelSHAP' : ExplanationKernelSHAP
+    'KernelSHAP' : ExplanationKernelSHAP,
+    'AttentionRollout' : ExplanationAttentionRollout
 }

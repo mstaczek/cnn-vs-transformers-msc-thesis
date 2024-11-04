@@ -35,6 +35,7 @@ Here I document all experiments.
 - [20240928-diagrams-of-pipeline](#20240928-diagrams-of-pipeline)
 - [20241018-statistics-metrics](#20241018-statistics-metrics)
 - [20241026-statistics-metrics-2](#20241026-statistics-metrics-2)
+- [20241102-attention-rollout-vit](#20241102-attention-rollout-vit)
 
 ## 20240410-gradcam-256
 
@@ -805,3 +806,41 @@ Results:
 | ![](20241018-statistics-metrics/graph_louvain_gradcam_cohens_kappa.png) | ![](20241026-statistics-metrics-2/graph_louvain_gradcam_cohens_kappa.png) |
 
 Conclusions: Results are similar to those obtained for 2 classes. Dendrograms are nearly identical except for the change of order the models are listed (but the merges itself are almost the same).
+
+
+## 20241102-attention-rollout-vit
+
+Goal: Compute attention rollout with ViT model, compare with Grad-CAM using Cohen's kappa.
+
+Settings:
+- use attention rollout from [here](https://github.com/jacobgil/vit-explain), use python 3.10 and torch 1.13 as in [here](https://github.com/piotr-komorowski/towards-evaluating-explanations-of-vit/blob/main/attn_explain/vit_rollout.py),
+- compute explanations for 128 images with attention rollout,
+- use 3 different thresholds with Cohen's kappa (compute it 3 times, each time using a single different coefficient),
+- print a few attention rollout explanations.
+
+### Results:
+
+| Threshold | Cohen's kappa | 
+| --- | --- |
+| 0.25 | 0.10 |
+| 0.50 | 0.08 |
+| 0.75 | 0.06 |
+
+> Meaning: Grad-CAM and attention rollout rarely agree whether a pixel is relevant or not.
+
+#### Possible reasoning:
+
+Different histograms of values of pixels:
+| Attention Rollout | Grad-CAM | 
+| --- | --- |
+| ![](20241102-attention-rollout-vit/pixel_values_histogram_attentionrollout.png) | ![](20241102-attention-rollout-vit/pixel_values_histogram_gradcam.png) |
+
+Sample explanations side-by-side
+
+| Attention Rollout | Grad-CAM |
+| --- | --- |
+|![](20241102-attention-rollout-vit/attention-rollout-sample-explanations/n02102040_1154.png)|![](20241102-attention-rollout-vit/gradcam-explanations-from-earlier/n02102040_1154.png)|
+|![](20241102-attention-rollout-vit/attention-rollout-sample-explanations/n02102040_2644.png)|![](20241102-attention-rollout-vit/gradcam-explanations-from-earlier/n02102040_2644.png)|
+|![](20241102-attention-rollout-vit/attention-rollout-sample-explanations/n03394916_36334.png)|![](20241102-attention-rollout-vit/gradcam-explanations-from-earlier/n03394916_36334.png)|
+|![](20241102-attention-rollout-vit/attention-rollout-sample-explanations/n03888257_4446.png)|![](20241102-attention-rollout-vit/gradcam-explanations-from-earlier/n03888257_4446.png)|
+
