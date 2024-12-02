@@ -17,3 +17,7 @@
 Go to the [results](https://github.com/mstaczek/cnn-vs-transformers-msc-thesis/tree/main/results) directory to read about various experiments and their results.
 
 Each folder contains notebooks for the experiments too.
+
+### Presentation
+
+Open [presentation.pdf](https://github.com/mstaczek/cnn-vs-transformers-msc-thesis/tree/main/presentation.pdf).
