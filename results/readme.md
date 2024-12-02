@@ -772,7 +772,8 @@ Goal: use Cohen's kappa score. Use as edge weigths or distances in clustering, a
 
 Setting: 
 - use Cohen's kappa score from [scikit-learn](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.cohen_kappa_score.html)
-- Grad-CAM explanations only.
+- Grad-CAM explanations only,
+- categorize pixel values into 2 classes, by threshold 0.5. Pixel values are initially scaled to -1 - 1.
 
 Results:
 
